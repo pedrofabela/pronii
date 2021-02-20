@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
+	name='viewport' />
+
+<title>Index</title>
+<th:block th:include="fragments/cabecera :: cabecera"></th:block>
+</head>
+<body class="">
+	<div class="wrapper ">
+
+		<div th:insert="fragments/menu :: menu-principal"></div>
+
+		<div class="main-panel">
+			<!-- Navbar horizontal -->
+			<div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header card-header-rose card-header-icon">
+									<div class="card-icon">
+										<i class="material-icons">assignment</i>
+									</div>
+									<h4 class="card-title">Administración de docentes</h4>
+								</div>
+								<div class="col-md-12 text-center">
+									<h2>Docentes registrados:</h2>
+									<label th:text="${Director}"></label>
+								</div>
+								
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-4">
+											<a th:href="@{/escuela/formDocente}"
+												class="btn btn-rose"><i class="material-icons">add_box</i></a>
+										</div>
+										<div class="col-md-4 text-center">
+											<div th:if="${msg != null}" class='alert alert-success'
+												th:text="${msg}" role='alert'></div>
+										</div>
+										<div class="col-md-4">
+											<label class="btn btn-rose pull-right"
+												th:text="'Total de Docentes: '+${listaDocentesEscuela.size()}"></label>
+										</div>
+									</div>
+									<div class="table-responsive">
+										<table class="table">
+											<thead style="background-color: purple; color: white;">
+												<tr class="text-center">
+													
+													<th>Curp </th>
+													<th>Nombre del docente</th>
+													<th>clave de servidor público</th>
+													<th>Teléfono</th>
+													<th>Correo Electrónico</th>
+													<th>Estatus</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="text-center" th:each="docente: ${listaDocentesEscuela}">
+													
+													<td th:text="${docente.tcDocentes.sCurp}"></td>
+													<td th:text="${docente.tcDocentes.sNombre}+' '+ ${docente.tcDocentes.sPrimerApellido}+' '+${docente.tcDocentes.sSegundoApellido}"></td>
+													<td th:text="${docente.tcDocentes.sClaveSerPub}"></td>
+													<td th:text="${docente.tcDocentes.sTelefono} != null ? ${docente.tcDocentes.sTelefono} : 'Sin Información'"></td>
+													<td th:text="${docente.tcDocentes.sCorreo} != null ? ${docente.tcDocentes.sCorreo} : 'Sin Información'"></td>
+													<td th:switch="${docente.nEstatus}">
+													<button type="button" class="btn btn-success btn-link" th:case="1">
+													 	Matricula Registrada
+                                						<div class="ripple-container"></div>
+                              						</button>
+											        <button type="button" class="btn btn-danger btn-link" th:case="0">
+													 	Sin Matricula Registrada
+                                						<div class="ripple-container"></div>
+                              						</button>
+													</td>
+													<td class="td-actions">
+														<a th:href="@{/escuela/consultaMatricula (id=${docente.nId})}" rel="tooltip"
+															class="btn btn-info btn-round">
+															<i class="material-icons">add</i>
+														</a>
+														<button class="btn btn-danger btn-round"
+															th:onclick="'eliminar('+*{docente.nId}+')'">
+															<i class="material-icons">delete</i>
+															
+														</button>
+													</td>
+												</tr>
+												
+												
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+					        </div>
+						</div>
+					</div>
+
+				</div>
+
+
+				<footer class="footer"> </footer>
+			</div>
+		</div>
+
+		<th:block th:include="fragments/scripts :: script"></th:block>
+		<script >
+		function eliminar(id) {
+		    if (!confirm('¿Está seguro de eliminar al docente?')) {
+		        return;
+		    }
+			
+		    window.location.href = "/escuela/quitarDocente?id="+id+" ";		    
+		}				
+		</script>
+	</div>
+</body>
+
+
+</html>

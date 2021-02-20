@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
+<title>Index</title>
+<th:block th:include="fragments/cabecera :: cabecera"></th:block>
+</head>
+<body class="">
+  <div class="wrapper ">
+    
+    <div th:insert="fragments/menu :: menu-principal"></div>
+    
+    <div class="main-panel">
+      <!-- Navbar horizontal -->
+      <div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+         <div class="col-md-12 text-center">
+         	<h1>Programa Nacional de Inglés (PRONI)</h1>
+         </div>
+         <div class="col-md-12 text-justify">
+         	<p> 
+         		El PRONI es un programa federal perteneciente a la Secretaría de Educación Pública (SEP) y 
+         		coordinado en el estado por la Dirección de Educación Básica, que tiene como principal objetivo,
+         		contribuir a asegurar la calidad de los aprendizajes en la educación básica mediante el 
+         		fortalecimiento de los procesos de enseñanza y aprendizaje de una lengua extranjera (inglés)
+         		en las escuelas públicas de Nuestro Estado. Para lograrlo, establece condiciones técnicas, 
+         		pedagógicas y promueve procesos de certificación internacional de alumnos en el dominio del 
+         		idioma inglés y de docentes de igual forma en el dominio del idioma y en la metodología de la enseñanza.
+         	</p>
+
+
+						
+
+						
+						<div id="carouselExampleControls" class="carousel slide d-none d-md-block"
+							data-ride="carousel" style="width: 50%; margin: auto;" >
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<img class="d-block w-100" th:src="@{/assets/img/new/proni1.jpg}" alt="First slide">
+								</div>
+								<div class="carousel-item">
+									<img class="d-block w-100" th:src="@{/assets/img/new/proni2.jpg}" alt="Second slide">
+								</div>
+								<div class="carousel-item">
+									<img class="d-block w-100" th:src="@{/assets/img/new/proni3.jpg}" alt="Third slide">
+								</div>
+							</div>
+							<a class="carousel-control-prev" href="#carouselExampleControls"
+								role="button" data-slide="prev"> <span
+								class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+								class="sr-only">Previous</span>
+							</a> <a class="carousel-control-next" href="#carouselExampleControls"
+								role="button" data-slide="next"> <span
+								class="carousel-control-next-icon" aria-hidden="true"></span> <span
+								class="sr-only">Next</span>
+							</a>
+						</div>
+
+						<div style="width: 100%; display: inline-block; margin-top: 30px; ">
+							<a th:href="@{/assets/documentos/reglas.pdf}" target="_blank">
+								Reglas de Operación del Programa Nacional de Inglés para el
+								ejercicio fiscal 2021: <img th:src="@{/assets/img/descarga.png}"
+								style="width: 30px;"></img>
+							</a>
+
+						</div>
+
+						<div style="width: 100%; display: inline-block;">
+							<a th:href="@{/assets/documentos/triptico.pdf}" target="_blank">
+								Tríptico: <img th:src="@{/assets/img/descarga.png}"
+								style="width: 30px;"></img>
+							</a>
+
+						</div>
+
+
+         	<div class="col-md-12 text-center">
+				<div th:if="${msgDocente != null}" class='alert alert-success' th:text="${msgDocente}" role='alert'></div>
+			</div>
+         	<div class="col-md-12 text-center">
+				<div th:if="${msgHoras != null}" class='alert alert-success' th:text="${msgHoras}" role='alert'></div>
+			</div>
+         
+
+         	
+         </div>
+        </div>
+      </div>
+      <footer class="footer">
+        
+      </footer>
+    </div>
+  </div>
+  
+  <th:block th:include="fragments/scripts :: script"></th:block>
+ 
+</body>
+
+
+</html>

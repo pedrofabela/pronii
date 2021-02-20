@@ -1,0 +1,60 @@
+<div th:fragment="menu-principal">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+
+	<div class="sidebar" data-color=green data-background-color="black"
+		data-image="../../assets/img/new/fondo.jpg">
+		<!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+		<div class="sidebar-wrapper">
+			<div class="user">
+				<div class="photo">
+					<img src="../../assets/img/faces/edomex.jpg" />
+				</div>
+				<div class="user-info">
+					<a th:href="@{/}" class="username"> <span> PRONII </span>
+					</a>
+
+				</div>
+			</div>
+			<ul class="nav">
+				<li class="nav-item " sec:authorize="hasAnyAuthority('ADMINISTRADOR')"><a class="nav-link"
+					th:href="@{/administrador/tablero}"> <i class="material-icons">dashboard</i>
+						<p>Tablero de Control</p>
+				</a></li>
+
+				<li class="nav-item " sec:authorize="hasAnyAuthority('ADMINISTRADOR')"><a class="nav-link" th:href="@{/administrador/reportes}"> <i
+						class="material-icons"> text_snippet </i> <span class="sidebar-normal">
+							Reportes </span>
+				</a></li>
+				<li class="nav-item " sec:authorize="hasAnyAuthority('ADMINISTRADOR')"><a class="nav-link" th:href="@{/administrador/pantallaInicioAdminEscuelas}"> <i
+						class="material-icons"> local_library </i> <span class="sidebar-normal">
+							Administración de escuelas </span>
+				</a></li>
+				<li class="nav-item " sec:authorize="hasAnyAuthority('ESCUELA')"><a class="nav-link" th:href="@{/escuela/consultaDocentes}"> <i
+						class="material-icons"> how_to_reg</i> <span class="sidebar-normal">
+							Administración de docentes </span>
+				</a></li>
+				<li class="nav-item " sec:authorize="hasAnyAuthority('ESCUELA')" ><a class="nav-link" th:href="@{/escuela/formEscuela}"> <i
+						class="material-icons"> auto_stories </i> <span class="sidebar-normal">
+							Registro de Horas Vacantes </span>
+				</a></li>
+				<li class="nav-item  " sec:authorize="hasAnyAuthority('DOCENTE')"><a class="nav-link" th:href="@{/docente/registraCertificaciones}">
+						<i class="material-icons">school </i> <span
+						class="sidebar-normal">  Registro de Certificaciones </span>
+				</a></li>
+				<li class="nav-item  " sec:authorize="hasAnyAuthority('DOCENTE')"><a class="nav-link" th:href="@{/docente/muestraForm}">
+						<i class="material-icons">school </i> <span
+						class="sidebar-normal">  Registro de cct de radicación </span>
+				</a></li>
+				
+
+			</ul>
+		</div>
+		<div class="sidebar-background"></div>
+	</div>
+</div>

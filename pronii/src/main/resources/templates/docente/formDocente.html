@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
+	name='viewport' />
+
+<title>Index</title>
+<th:block th:include="fragments/cabecera :: cabecera"></th:block>
+
+</head>
+<body class="">
+	<div class="wrapper ">
+
+		<div th:insert="fragments/menu :: menu-principal"></div>
+
+		<div class="main-panel">
+			<!-- Navbar horizontal -->
+			<div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<!-- div para formulario de escuelas -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="col-md-12 text-center">
+									<h2>Registro de docente</h2>
+								</div>
+								<div class="card-body">								
+									<div th:if="${tcDocentes != null}">
+									<div class="col-md-12 text-center">
+									<h2>Complete los campos para agregar al docente</h2>
+								    </div>
+									<form th:action="@{/docente/guardaDocente}" method="post"
+										th:object="${tcDocentes}" id="FormDocente">
+
+										<input type="hidden" name="nId" th:field="*{nId}">
+
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Curp</label> <input
+														type="text" class="form-control" th:name="curp"
+														th:field="*{sCurp}" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Nombre</label> <input
+														type="text" th:field="*{sNombre}" class="form-control" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Apellido Paterno</label> <input
+														type="text" th:field="*{sPrimerApellido}" class="form-control" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Apellido Materno</label> <input
+														type="text" th:field="*{sSegundoApellido}" class="form-control" readonly="readonly">
+												</div>
+											</div>
+											
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												<select class="selectpicker"
+													data-style="select-with-transition" th:field="*{nIdSexo}"  title="Sexo"
+													data-size="7" required="required">												
+													<option th:each="genero:${listaGenero}" th:value="${genero.nId}" th:text="${genero.sNombre}"></option>
+												</select>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													 <input type="text" th:field="*{sFechaNacimiento}"    class="form-control " readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*clave de servidor
+														público</label> <input type="text" class="form-control" th:field="*{sClaveSerPub}" required="required">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Teléfono</label> <input
+														type="tel" class="form-control" th:field="*{sTelefono}" required="required">
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-4">
+												<select class="selectpicker"
+													data-style="select-with-transition" 
+													title="*Preparación Profesional" th:field="*{nIdPreProfe}" data-size="7" required="required">				
+													<option th:each="preProfe:${listaPreProfe}" th:value="${preProfe.nId}" th:text="${preProfe.sNombre}"></option>
+												</select>
+											</div>
+											<div class="col-md-4">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Correo
+														electrónico</label> <input type="text" th:field="*{sCorreo}" class="form-control" required="required">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													 <input type="text" id="datePicker" th:field="*{sFechaIngresoSubsistema}" placeholder="*Fecha de Ingreso al subsistema" class="form-control datepicker" required="required">
+												</div>
+											</div>
+											</div>
+											<div class="row">
+												<div class="col-md-6">
+                          								<select th:field="*{nIdEscuelaRadi}" class="selectpicker" data-style="select-with-transition"  title="Escuela de Radicación"  required="required">
+                            
+                            								<option th:each="escuela: ${listaEscuelas}" th:value="${escuela.tcEscuela.nId}" th:text="${escuela.tcEscuela.sNombre}"></option>
+                            							   
+                            								
+                            
+                          								</select>
+                        							</div>
+											</div>
+											
+										
+
+										<br> <br>
+										<div class="category form-category">*Campos Requeridos</div>
+										
+										<button type="submit" 
+											class="btn btn-success pull-right">Actualizar Datos</button>
+										<br> <br> <br>
+										<div th:if="${msg != null}" class='alert alert-danger'
+											th:text="${msg}" role='alert'></div>
+										<div class="clearfix"></div>
+									</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="footer"> </footer>
+		</div>
+	</div>
+
+	<th:block th:include="fragments/scripts :: script"></th:block>
+	
+	
+</body>
+
+
+</html>
