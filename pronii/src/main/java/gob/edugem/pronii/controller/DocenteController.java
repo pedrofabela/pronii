@@ -2,7 +2,6 @@ package gob.edugem.pronii.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -16,12 +15,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import gob.edugem.pronii.model.TcDocentes;
 import gob.edugem.pronii.model.TwCenni;
-import gob.edugem.pronii.model.TwEscuelaDocentes;
 import gob.edugem.pronii.model.TwMetodologia;
 import gob.edugem.pronii.model.TwNivelIdioma;
 import gob.edugem.pronii.service.CertificacionesService;
@@ -31,7 +28,6 @@ import gob.edugem.pronii.service.NivelCertificacionService;
 import gob.edugem.pronii.service.PreProfService;
 import gob.edugem.pronii.service.SexoService;
 import gob.edugem.pronii.service.TipoCertificacionService;
-import gob.edugem.pronii.utils.Constantes;
 
 @Controller
 @RequestMapping("/docente/")

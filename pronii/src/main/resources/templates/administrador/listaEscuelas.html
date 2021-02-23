@@ -89,7 +89,12 @@
 													<td th:text="${escuela.sCct}"></td>
 													<td th:text="${escuela.sNombre}"></td>
 													<td th:text="${escuela.tcTurno.sNombre}"></td>
-													<td th:text="${escuela.tcDirectores.sNombre}"></td>
+													<td >
+													<a th:href="@{/administrador/agregarDirector (id=${escuela.nId}) }" th:unless="${escuela.nIdDirector}" class="btn btn-danger btn-link"  th:text="'FALTA ASIGNAR DIRECTOR'">
+													</a>
+													<label th:if="${escuela.nIdDirector}" class="btn btn-success btn-link"  th:text="${escuela.tcDirectores.sNombre}+' '+ ${escuela.tcDirectores.sApellidoPaterno} +' '+${escuela.tcDirectores.sApellidoMaterno} ">
+													</label>
+													</td>
 													<td th:text="${escuela.tcZonaEscolar.sNombre}"></td>
 													<td class="td-actions text-right"><a
 														th:href="@{/administrador/editarEscuela (id=${escuela.nId}) }"

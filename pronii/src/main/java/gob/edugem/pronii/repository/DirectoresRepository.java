@@ -13,5 +13,7 @@ public interface DirectoresRepository extends JpaRepository<TcDirectores, Long> 
 	
 	@Query(value = "SELECT * FROM TC_DIRECTORES WHERE S_NOMBRE LIKE %:term% and N_ESTATUS = 1",  nativeQuery = true)
 	public List<TcDirectores> findBysNombre(String term);
+	
+	public TcDirectores findBysCurp(String sCurp);
 
 }

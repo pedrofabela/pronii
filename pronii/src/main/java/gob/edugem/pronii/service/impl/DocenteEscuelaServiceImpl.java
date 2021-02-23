@@ -35,7 +35,7 @@ public class DocenteEscuelaServiceImpl extends WsConsultaCurpServiceImpl impleme
 	public TcDocentes consultaCurpDocenteRenapo(String curp)  {
 		
 		TcDocentes tcDocentes= new TcDocentes();
-		DtoDatosCurp data = this.consultaCurp(curp);
+		DtoDatosCurp data = super.consultaCurp(curp);
 		
 		if (data.getResultado().equals("EXITO")) {
 			tcDocentes.setsCurp(data.getsCurp());

@@ -40,9 +40,9 @@
 
 										<form  th:action="@{/escuela/guardaMatricula}" method="post"
 										th:object="${twEscuelaDocentes}">
-											<input type="text" th:field="*{nId}"/>
-											<input type="text" th:field="*{nIdEscuela}"/>
-											<input type="text" th:field="*{nIdDocente}"/>
+											<input type="hidden" th:field="*{nId}"/>
+											<input type="hidden" th:field="*{nIdEscuela}"/>
+											<input type="hidden" th:field="*{nIdDocente}"/>
 											
 											<div class="row col-md-12">
 												<div class="col-md-6">

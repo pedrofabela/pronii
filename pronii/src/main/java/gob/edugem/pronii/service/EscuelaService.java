@@ -8,6 +8,7 @@ public interface EscuelaService  {
 	public TcEscuela obtenerEscuelaId(Long  id);
 	public TcEscuela obtenerEscuelaCct(String cct);
 	public List <TcEscuela> ListaEscuelaRegion(Long nIdRegion);
+	public List <TcEscuela> obtenerEscuelaDirector(Long nIdDirector);
 	public String  guardaEscuela(TcEscuela tcEscuela);
 	public void eliminarEscuelaId(Long id);
 }

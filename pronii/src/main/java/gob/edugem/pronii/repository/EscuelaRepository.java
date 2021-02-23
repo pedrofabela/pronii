@@ -16,5 +16,8 @@ public interface EscuelaRepository extends JpaRepository<TcEscuela, Long> {
 	
 	public List<TcEscuela> findBysCct(String cct);
 	
+	List<TcEscuela> findBynIdDirector(Long nIdDirector);
+	
+	
 	
 }

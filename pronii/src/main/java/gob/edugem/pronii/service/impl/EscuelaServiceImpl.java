@@ -58,6 +58,12 @@ public class EscuelaServiceImpl implements EscuelaService {
 		escuelaRepository.deleteById(id);		
 	}
 
+	@Override
+	public List<TcEscuela> obtenerEscuelaDirector(Long nIdDirector) {
+		
+		return escuelaRepository.findBynIdDirector(nIdDirector);
+	}
+
 	
 
 }

@@ -42,6 +42,12 @@ public class TcDirectores implements Serializable{
 	@Column(name = "S_CURP")
 	private String sCurp;
 	
+	@Column(name = "S_APELLIDOPATERNO")
+	private String sApellidoPaterno;
+	
+	@Column(name = "S_APELLIDOMATERNO")
+	private String sApellidoMaterno;
+	
 	public Long getnId() {
 		return nId;
 	}
@@ -77,6 +83,20 @@ public class TcDirectores implements Serializable{
 	}
 	public void setsCurp(String sCurp) {
 		this.sCurp = sCurp;
+	}
+	
+	
+	public String getsApellidoPaterno() {
+		return sApellidoPaterno;
+	}
+	public void setsApellidoPaterno(String sApellidoPaterno) {
+		this.sApellidoPaterno = sApellidoPaterno;
+	}
+	public String getsApellidoMaterno() {
+		return sApellidoMaterno;
+	}
+	public void setsApellidoMaterno(String sApellidoMaterno) {
+		this.sApellidoMaterno = sApellidoMaterno;
 	}
 	@Override
 	public String toString() {

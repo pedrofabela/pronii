@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import gob.edugem.pronii.model.TcDocentes;
 import gob.edugem.pronii.model.TcEscuela;
-import gob.edugem.pronii.model.TcRegional;
 import gob.edugem.pronii.model.TwEscuelaDocentes;
 import gob.edugem.pronii.service.DirectoresService;
 import gob.edugem.pronii.service.DocenteEscuelaService;
@@ -27,7 +26,6 @@ import gob.edugem.pronii.service.RegionalService;
 import gob.edugem.pronii.service.SexoService;
 import gob.edugem.pronii.service.TurnoService;
 import gob.edugem.pronii.service.ZonaEscolarService;
-import gob.edugem.pronii.utils.Constantes;
 
 @Controller
 @RequestMapping("/escuela/")

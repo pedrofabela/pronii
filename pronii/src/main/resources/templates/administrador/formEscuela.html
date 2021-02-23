@@ -35,6 +35,7 @@
 										th:object="${tcEscuela}" id="FormEscuela">
 										
 										<input type="hidden" name="nId" th:field="*{nId}">
+										<input type="hidden" name="nId" th:field="*{nIdDirector}">
 										<div class="row">
 											<div class="col-md-3">
 												<div class="form-group">
@@ -147,30 +148,7 @@
 
 												</select>
 											</div>
-											<div class="col-md-4">
-												<label class="bmd-label-floating">*Director</label><input
-													type="text" class="form-control" id="consultaDirector"
-													name="sNombreDirector"  th:value="${sNombreDirector}" placeholder="ingresa el nombre del director"
-													required="required"> <input type="hidden"
-													id="IDDIRECTOR" class="form-control"
-													aria-label="Sizing example input"
-													aria-describedby="inputGroup-sizing-sm" name="IdDirector"
-													th:field="*{nIdDirector}">
-
-											</div>
 										</div>
-										<!-- <div class="row">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="bmd-label-floating">Horas vacantes Indeterminadas</label> <input type="number" class="form-control" >
-											</div>
-										</div>
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="bmd-label-floating">Horas vacantes determinadas</label> <input type="number" class="form-control">
-											</div>
-										</div>
-									</div> -->
 										<br> <br>
 										<div class="category form-category">*Campos Requeridos</div>
 										<button type="submit"  th:if="${nId == null} " class="btn btn-rose pull-right">Guardar</button>
