@@ -25,8 +25,8 @@ public class TwCenni implements Serializable{
 	
 	@Id
 	@Column(name="N_ID")
-	@SequenceGenerator(allocationSize = 1, name = "secuencia", sequenceName = "TW_CENNI_SEQ")
-    @GeneratedValue(generator = "secuencia", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(allocationSize = 1, name = "cerCenni", sequenceName = "TW_CENNI_SEQ")
+    @GeneratedValue(generator = "cerCenni", strategy = GenerationType.SEQUENCE)
 	private Long nId;
 	
 	@Column(name = "N_IDDOCENTE")

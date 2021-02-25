@@ -19,7 +19,7 @@
           <div class="collapse navbar-collapse justify-content-end">          
             <ul class="navbar-nav"> 
              <li>
-             	<span class="nav-item">Bienvenido</span>&nbsp;<span class="text-black" sec:authentication="name"></span>&nbsp;
+             	<span th:if="session.usuario != null" class="text-black" th:text="'Bienvenido '+ ${session.usuario.nombre}"></span>&nbsp;
              	
              </li>    
               <li class="nav-item dropdown">

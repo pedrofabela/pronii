@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import gob.edugem.pronii.model.Perfil;
 import gob.edugem.pronii.model.TcDocentes;
 import gob.edugem.pronii.model.TcEscuela;
 import gob.edugem.pronii.model.TwEscuelaDocentes;
+import gob.edugem.pronii.model.Usuario;
 import gob.edugem.pronii.service.DirectoresService;
 import gob.edugem.pronii.service.DocenteEscuelaService;
 import gob.edugem.pronii.service.EscuelaService;
@@ -25,6 +28,7 @@ import gob.edugem.pronii.service.PreProfService;
 import gob.edugem.pronii.service.RegionalService;
 import gob.edugem.pronii.service.SexoService;
 import gob.edugem.pronii.service.TurnoService;
+import gob.edugem.pronii.service.UsuarioService;
 import gob.edugem.pronii.service.ZonaEscolarService;
 
 @Controller
@@ -45,16 +49,27 @@ public class EscuelaController {
 	
 	@Autowired
 	private RegionalService regionalService;
+	
 	@Autowired
 	private TurnoService turnoService;
+	
 	@Autowired
 	private ZonaEscolarService zonaEscolarService;
+	
 	@Autowired
 	private MunicipioService municipioService;
+	
 	@Autowired 
 	private ModalidadService modalidadService;
+	
 	@Autowired 
 	private DirectoresService directoresService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 
 	public String nId;
@@ -70,9 +85,10 @@ public class EscuelaController {
 		nIdEscuela = tcEscuela.getnId();
 		List<TwEscuelaDocentes> listaDoncentesEscuela = docenteEscuelaService.obtenerDocentesEscuela(tcEscuela.getnId());
 		System.out.println(listaDoncentesEscuela.size());
+		
 		model.addAttribute("listaDocentesEscuela", listaDoncentesEscuela);
-		model.addAttribute("Director", tcEscuela.getTcDirectores().getsNombre());
-		System.out.println(tcEscuela.getTcDirectores().getsNombre());
+		model.addAttribute("Director", tcEscuela.getnIdDirector() != null ? tcEscuela.getTcDirectores().getsNombre() : "No hay Director Asignado a esta escuela");
+		
 
 		return "escuela/listaDocentes";
 	}
@@ -136,7 +152,21 @@ public class EscuelaController {
 			twEscuelaDocentes.setnIdDocente(docenteGuardado.getnId());
 
 			docenteEscuelaService.guardaDocenteEscuela(twEscuelaDocentes);
-
+			
+			//crea usuario para acceso
+			
+			Usuario user = new Usuario();
+			user.setNombre(docenteGuardado.getsNombre()+' '+docenteGuardado.getsPrimerApellido()+' '+ docenteGuardado.getsSegundoApellido());
+			user.setEmail(docenteGuardado.getsCorreo());
+			user.setUsername(docenteGuardado.getsCurp());
+			user.setPassword(passwordEncoder.encode(docenteGuardado.getsClaveSerPub()));
+			user.setEstatus(1);	
+			
+			Perfil perfil = new Perfil();			
+			perfil.setnId(3L);			
+			user.agregar(perfil);	
+			
+			usuarioService.guardaUsuario(user);		
 			attributes.addFlashAttribute("msg", "Docente registrado correctamente");
 
 		} else {
@@ -193,8 +223,13 @@ public class EscuelaController {
 	@GetMapping("formEscuela")
 	public String formEscuela(Authentication auth ,Model model, TcEscuela tcEscuela) {	
 		tcEscuela = escuelaService.obtenerEscuelaCct(auth.getName());
-		String sNombreDirector= directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector()).getsNombre();
-		model.addAttribute("sNombreDirector", sNombreDirector);
+		if (tcEscuela.getnIdDirector() != null) {
+			String sNombreDirector= directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector()).getsNombre();
+			model.addAttribute("sNombreDirector", sNombreDirector);
+		}else {
+			model.addAttribute("sNombreDirector", "No hay Director Asignado a esta escuela");
+		}
+		
 		model.addAttribute("nId", "actualizacion");
 		model.addAttribute("tcEscuela", tcEscuela);
 		return "escuela/formEscuela";
@@ -211,6 +246,40 @@ public class EscuelaController {
 		
 			attributes.addFlashAttribute("msgHoras", "Horas Actualizadas correctamente!");
 			return "redirect:/";			
+	}
+	
+	@GetMapping("formActualizaContra")
+	public String formActualizaContra(Usuario usuario, @RequestParam(required = false) Long id) {
+		
+		TwEscuelaDocentes twEscuelaDocentes = docenteEscuelaService.consultaDocenteEscuela(id);
+		
+		Usuario usuarioConsultado= usuarioService.obterUsuarioUsername(twEscuelaDocentes.getTcDocentes().getsCurp());
+		
+		usuario.setnId(usuarioConsultado.getnId());
+		
+		return "escuela/formActualizaPass";
+	}
+	
+	@PostMapping("actualizaPassword")
+	public String actualizaPassword(Usuario usuario, Model model, RedirectAttributes attributes) {
+
+		System.out.println(usuario);
+		
+		if (usuario.getPassword().equals(usuario.getPasswordConfirm()) ) {
+			Usuario usuariorecuperado = usuarioService.obtenerUsuarioId(usuario.getnId());		
+			usuariorecuperado.setPassword(passwordEncoder.encode(usuario.getPassword()));
+			
+			usuarioService.guardaUsuario(usuariorecuperado);
+			
+			attributes.addFlashAttribute("msgActualizaContra", "Contraseña actualizada con exito,  su nueva contraseña es: "+usuario.getPassword());
+			return "redirect:/";
+		}else {
+			model.addAttribute("msg", "las contraseñas no coinciden. Intentar de nuevo");
+			return "escuela/formActualizaPass";
+		}
+
+		
+
 	}
 	
 	

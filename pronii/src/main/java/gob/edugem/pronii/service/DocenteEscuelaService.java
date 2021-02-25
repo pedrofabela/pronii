@@ -15,6 +15,8 @@ public interface DocenteEscuelaService {
 	
 	public TcDocentes guardaDocente(TcDocentes tcDocentes);
 	
+	public TcDocentes consultaDocenteId(Long idDocente);
+	
 	public void guardaDocenteEscuela(TwEscuelaDocentes twEscuelaDocentes);
 	
 	public List<TwEscuelaDocentes> consultaRelacionDocenteEscuela(Long idEscuela, Long idDocente);
@@ -22,6 +24,8 @@ public interface DocenteEscuelaService {
 	public List<TwEscuelaDocentes> consultaEscuelaRelacionadas(Long idDocente);
 	
 	public void eliminarDocenteEscuelaId(Long id);
+	
+	public void eliminarDocenteEscuelaIdEscuela(Long idEscuela);
 	
 	public TwEscuelaDocentes consultaDocenteEscuela(Long id);
 

@@ -52,6 +52,11 @@
 						class="sidebar-normal">  Registro de cct de radicación </span>
 				</a></li>
 				
+				<li class="nav-item  " sec:authorize="hasAnyAuthority('DOCENTE')"><a class="nav-link" th:href="@{/docente/formActualizaContra}">
+						<i class="material-icons">admin_panel_settings</i> <span
+						class="sidebar-normal">  Actualizar contraseña </span>
+				</a></li>
+				
 
 			</ul>
 		</div>

@@ -2,6 +2,8 @@ package gob.edugem.pronii.service.impl;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,8 +59,14 @@ public class DocenteEscuelaServiceImpl extends WsConsultaCurpServiceImpl impleme
 		
 		return docenteRepository.findBysCurp(curp);
 	}
+	
+	@Override
+	public TcDocentes consultaDocenteId(Long idDocente) {	
+		return docenteRepository.findById(idDocente).get();
+	}
 
 	@Override
+	@Transactional
 	public TcDocentes guardaDocente(TcDocentes tcDocentes) {
 		
 		TcDocentes docenteGuardado= docenteRepository.save(tcDocentes);
@@ -67,6 +75,7 @@ public class DocenteEscuelaServiceImpl extends WsConsultaCurpServiceImpl impleme
 	}
 
 	@Override
+	@Transactional
 	public void guardaDocenteEscuela(TwEscuelaDocentes twEscuelaDocentes) {
 		docenteEscuelaRepository.save(twEscuelaDocentes);		
 	}
@@ -81,6 +90,7 @@ public class DocenteEscuelaServiceImpl extends WsConsultaCurpServiceImpl impleme
 	}
 
 	@Override
+	@Transactional
 	public void eliminarDocenteEscuelaId(Long id) {
 		docenteEscuelaRepository.deleteById(id);
 		
@@ -97,4 +107,14 @@ public class DocenteEscuelaServiceImpl extends WsConsultaCurpServiceImpl impleme
 		
 		return docenteEscuelaRepository.findBynIdDocente(idDocente);
 	}
+
+	@Override
+	@Transactional
+	public void eliminarDocenteEscuelaIdEscuela(Long idEscuela) {
+		
+		docenteEscuelaRepository.deleteBynIdEscuela(idEscuela);
+		
+	}
+
+	
 }

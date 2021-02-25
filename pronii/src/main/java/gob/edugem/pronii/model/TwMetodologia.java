@@ -25,8 +25,8 @@ public class TwMetodologia implements Serializable{
 	
 	@Id
 	@Column(name="N_ID")
-	@SequenceGenerator(allocationSize = 1, name = "secuencia", sequenceName = "TW_CERTMETODOLOGIA_SEQ")
-    @GeneratedValue(generator = "secuencia", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(allocationSize = 1, name = "cerMet", sequenceName = "TW_CERTMETODOLOGIA_SEQ")
+    @GeneratedValue(generator = "cerMet", strategy = GenerationType.SEQUENCE)
 	private Long nId;
 	
 	@Column(name = "N_IDDOCENTE")

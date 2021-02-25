@@ -16,11 +16,13 @@ import gob.edugem.pronii.model.TcDirectores;
 import gob.edugem.pronii.model.TcEscuela;
 import gob.edugem.pronii.model.TcRegional;
 import gob.edugem.pronii.service.DirectoresService;
+import gob.edugem.pronii.service.DocenteEscuelaService;
 import gob.edugem.pronii.service.EscuelaService;
 import gob.edugem.pronii.service.ModalidadService;
 import gob.edugem.pronii.service.MunicipioService;
 import gob.edugem.pronii.service.RegionalService;
 import gob.edugem.pronii.service.TurnoService;
+import gob.edugem.pronii.service.UsuarioService;
 import gob.edugem.pronii.service.ZonaEscolarService;
 import gob.edugem.pronii.utils.Constantes;
 
@@ -42,6 +44,14 @@ public class AdministradorController {
 	private ModalidadService modalidadService;
 	@Autowired 
 	private DirectoresService directoresService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired 
+	private DocenteEscuelaService docenteEscuelaService;
+	
+	
 	
 	
 	public String sNombreDirector;
@@ -116,7 +126,21 @@ public class AdministradorController {
 	
 	@GetMapping("eliminarEscuela")
 	public String eliminarEscuela(@RequestParam(required = false) Long id, TcRegional tcRegional, RedirectAttributes attributes) {				
-		escuelaService.eliminarEscuelaId(id);		
+		
+		TcEscuela tcEscuela = escuelaService.obtenerEscuelaId(id);
+		
+		
+		
+		//elimina relacion docente escuela
+		docenteEscuelaService.eliminarDocenteEscuelaIdEscuela(id);
+		
+		//elimina usuario de acceso
+		usuarioService.eliminaUsuarioPorUsername(tcEscuela.getsCct());
+		
+		//elimina la escuela
+		 escuelaService.eliminarEscuelaId(id);
+
+		
 		tcRegional.setnId(nIdRegion);
 		System.out.println("tcRegional id: "+tcRegional.getnId());
 		attributes.addFlashAttribute("tcRegional", tcRegional);

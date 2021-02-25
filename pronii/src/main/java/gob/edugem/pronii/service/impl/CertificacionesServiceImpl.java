@@ -1,5 +1,7 @@
 package gob.edugem.pronii.service.impl;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +26,21 @@ public class CertificacionesServiceImpl implements CertificacionesService {
 	
 
 	@Override
+	@Transactional
 	public void guardaCertificacionNivel(TwNivelIdioma twNivelIdioma) {
 		certificacionNivelRepository.save(twNivelIdioma);
 
 	}
 
 	@Override
+	@Transactional
 	public void guardaCertificacionCenni(TwCenni twCenni) {
 		certificacionCenniRepository.save(twCenni);
 
 	}
 
 	@Override
+	@Transactional
 	public void guardaCertificacionMetodologia(TwMetodologia twMetodologia) {
 		certificacionMetodologiaRepository.save(twMetodologia);
 

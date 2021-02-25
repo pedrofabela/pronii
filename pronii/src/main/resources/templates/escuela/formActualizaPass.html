@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
+	name='viewport' />
+
+<title>Index</title>
+<th:block th:include="fragments/cabecera :: cabecera"></th:block>
+
+</head>
+<body class="">
+	<div class="wrapper ">
+
+		<div th:insert="fragments/menu :: menu-principal"></div>
+
+		<div class="main-panel">
+			<!-- Navbar horizontal -->
+			<div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<!-- div para formulario de escuelas -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="col-md-12 text-center">
+									<h2>Actualizacion de contraseña</h2>
+								</div>
+								<div class="card-body">															
+									<div class="col-md-12 text-center">
+									<h2>Complete los campos para actualizar su contraseña</h2>
+								    </div>
+									<form th:action="@{/escuela/actualizaPassword}" method="post"
+										th:object="${usuario}" >
+
+										<input type="hidden"  th:field="*{nId}" >
+
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Contraseña: </label> <input
+														type="password" class="form-control"
+														th:field="*{password}" required="required" minlength="4">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Confirmar Contraseña</label> <input
+														type="password" th:field="*{passwordConfirm}" class="form-control" required="required" minlength="4">
+												</div>
+											</div>
+											
+											
+										</div>
+																					
+										<div class="category form-category">*Campos Requeridos</div>									
+										<button type="submit"
+											class="btn btn-success pull-right">Actualizar Contraseña</button>
+											<br>
+											<br>
+										<div th:if="${msg != null}" class='alert alert-danger'
+											th:text="${msg}" role='alert'></div>
+										<div class="clearfix"></div>
+									</form>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer class="footer"> </footer>
+		</div>
+	</div>
+
+	<th:block th:include="fragments/scripts :: script"></th:block>
+	
+	
+</body>
+
+
+</html>

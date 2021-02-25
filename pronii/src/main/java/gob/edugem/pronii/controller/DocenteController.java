@@ -3,9 +3,12 @@ package gob.edugem.pronii.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,7 @@ import gob.edugem.pronii.model.TcDocentes;
 import gob.edugem.pronii.model.TwCenni;
 import gob.edugem.pronii.model.TwMetodologia;
 import gob.edugem.pronii.model.TwNivelIdioma;
+import gob.edugem.pronii.model.Usuario;
 import gob.edugem.pronii.service.CertificacionesService;
 import gob.edugem.pronii.service.DocenteEscuelaService;
 import gob.edugem.pronii.service.ModulosService;
@@ -28,6 +32,7 @@ import gob.edugem.pronii.service.NivelCertificacionService;
 import gob.edugem.pronii.service.PreProfService;
 import gob.edugem.pronii.service.SexoService;
 import gob.edugem.pronii.service.TipoCertificacionService;
+import gob.edugem.pronii.service.UsuarioService;
 
 @Controller
 @RequestMapping("/docente/")
@@ -53,6 +58,12 @@ public class DocenteController {
 
 	@Autowired
 	private PreProfService preProfeService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	Long nIdDocente;
 
@@ -129,6 +140,39 @@ public class DocenteController {
 		attributes.addFlashAttribute("msgDocente", "Datos Actualizados");
 
 		return "redirect:/";
+
+	}
+	
+	@GetMapping("formActualizaContra")
+	public String formActualizaContra(Usuario usuario, HttpSession session) {
+		
+		Long nId=(Long) session.getAttribute("nIdUsuario");
+		System.out.println(session.getAttribute("nIdUsuario"));
+		
+		usuario.setnId(nId);
+		
+		return "docente/formActualizaPass";
+	}
+	
+	@PostMapping("actualizaPassword")
+	public String actualizaPassword(Usuario usuario, Model model, RedirectAttributes attributes) {
+
+		System.out.println(usuario);
+		
+		if (usuario.getPassword().equals(usuario.getPasswordConfirm()) ) {
+			Usuario usuariorecuperado = usuarioService.obtenerUsuarioId(usuario.getnId());		
+			usuariorecuperado.setPassword(passwordEncoder.encode(usuario.getPassword()));
+			
+			usuarioService.guardaUsuario(usuariorecuperado);
+			
+			attributes.addFlashAttribute("msgActualizaContra", "Contraseña actualizada con exito,  su nueva contraseña es: "+usuario.getPassword());
+			return "redirect:/";
+		}else {
+			model.addAttribute("msg", "las contraseñas no coinciden. Intentar de nuevo");
+			return "docente/formActualizaPass";
+		}
+
+		
 
 	}
 

@@ -83,11 +83,15 @@
 													</td>
 													<td class="td-actions">
 														<a th:href="@{/escuela/consultaMatricula (id=${docente.nId})}" rel="tooltip"
-															class="btn btn-info btn-round">
+															class="btn btn-info btn-round" title="Agregar matricula">
 															<i class="material-icons">add</i>
 														</a>
+														<a th:href="@{/escuela/formActualizaContra (id=${docente.nId})}" rel="tooltip"
+															class="btn btn-warning btn-round" title="Restablecer Password">
+															<i class="material-icons">admin_panel_settings</i>
+														</a>
 														<button class="btn btn-danger btn-round"
-															th:onclick="'eliminar('+*{docente.nId}+')'">
+															th:onclick="'eliminar('+*{docente.nId}+')'" title="Eliminar docente">
 															<i class="material-icons">delete</i>
 															
 														</button>

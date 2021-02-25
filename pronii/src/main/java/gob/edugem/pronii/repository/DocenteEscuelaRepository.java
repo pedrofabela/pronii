@@ -18,5 +18,7 @@ public interface DocenteEscuelaRepository extends JpaRepository<TwEscuelaDocente
 	
 	public List<TwEscuelaDocentes> findBynIdDocente(Long IdDocente);
 	
+	public void deleteBynIdEscuela(Long idEscuela);
+	
 
 }

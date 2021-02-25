@@ -25,8 +25,8 @@ public class TwNivelIdioma implements Serializable{
 	
 	@Id
 	@Column(name="N_ID")
-	@SequenceGenerator(allocationSize = 1, name = "secuencia", sequenceName = "TW_CERTNIVELIDIOMA_SEQ")
-    @GeneratedValue(generator = "secuencia", strategy = GenerationType.SEQUENCE)
+	@SequenceGenerator(allocationSize = 1, name = "cerNivel", sequenceName = "TW_CERTNIVELIDIOMA_SEQ")
+    @GeneratedValue(generator = "cerNivel", strategy = GenerationType.SEQUENCE)
 	private Long nId;
 	
 	@Column(name = "N_IDDOCENTE")
