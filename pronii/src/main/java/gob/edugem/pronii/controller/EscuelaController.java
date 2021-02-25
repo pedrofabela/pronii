@@ -2,6 +2,8 @@ package gob.edugem.pronii.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -249,13 +251,12 @@ public class EscuelaController {
 	}
 	
 	@GetMapping("formActualizaContra")
-	public String formActualizaContra(Usuario usuario, @RequestParam(required = false) Long id) {
+	public String formActualizaContra(Usuario usuario, @RequestParam(required = false) Long id, HttpSession session) {
 		
-		TwEscuelaDocentes twEscuelaDocentes = docenteEscuelaService.consultaDocenteEscuela(id);
+		Long nId=(Long) session.getAttribute("nIdUsuario");
+		System.out.println(session.getAttribute("nIdUsuario"));
 		
-		Usuario usuarioConsultado= usuarioService.obterUsuarioUsername(twEscuelaDocentes.getTcDocentes().getsCurp());
-		
-		usuario.setnId(usuarioConsultado.getnId());
+		usuario.setnId(nId);
 		
 		return "escuela/formActualizaPass";
 	}
@@ -281,6 +282,23 @@ public class EscuelaController {
 		
 
 	}
+	
+	@GetMapping("reestablecerPassword")
+	public String reestablecerPassword(@RequestParam(required = false) Long id, RedirectAttributes attributes) {
+		
+		TwEscuelaDocentes twEscuelaDocentes = docenteEscuelaService.consultaDocenteEscuela(id);
+		
+		Usuario usuarioConsultado= usuarioService.obterUsuarioUsername(twEscuelaDocentes.getTcDocentes().getsCurp());
+		
+		usuarioConsultado.setPassword(passwordEncoder.encode(twEscuelaDocentes.getTcDocentes().getsClaveSerPub()));
+		
+		usuarioService.guardaUsuario(usuarioConsultado);
+		
+		attributes.addFlashAttribute("msg", "Contraseña reestablecida correctamente");
+		return "redirect:/escuela/consultaDocentes";
+	}
+	
+	
 	
 	
 	@ModelAttribute

@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import gob.edugem.pronii.model.Usuario;
 import gob.edugem.pronii.service.UsuarioService;
@@ -60,14 +62,14 @@ public class LoginController {
 		return "redirect:/login";
 	}
 	
-//	@GetMapping("/bcrypt/{texto}")
-//	@ResponseBody //regresa el texto al navegador de internet
-//	public String encriptar(@PathVariable("texto") String texto) {
-//		
-//		return texto +"Texto encriptado en bCrypt: "+passwordEncoder.encode(texto);
-//				
-//		
-//	}
+	@GetMapping("/bcrypt/{texto}")
+	@ResponseBody //regresa el texto al navegador de internet
+	public String encriptar(@PathVariable("texto") String texto) {
+		
+		return texto +"Texto encriptado en bCrypt: "+passwordEncoder.encode(texto);
+				
+		
+	}
 	
 //	@GetMapping("/bcrypt")
 //	@ResponseBody //regresa el texto al navegador de internet

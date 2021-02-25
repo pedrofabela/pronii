@@ -3,6 +3,7 @@ package gob.edugem.pronii.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import gob.edugem.pronii.model.TcDirectores;
 import gob.edugem.pronii.model.TcEscuela;
 import gob.edugem.pronii.model.TcRegional;
+import gob.edugem.pronii.model.Usuario;
 import gob.edugem.pronii.service.DirectoresService;
 import gob.edugem.pronii.service.DocenteEscuelaService;
 import gob.edugem.pronii.service.EscuelaService;
@@ -50,6 +52,9 @@ public class AdministradorController {
 	
 	@Autowired 
 	private DocenteEscuelaService docenteEscuelaService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	
 	
@@ -227,6 +232,22 @@ public class AdministradorController {
 		attributes.addFlashAttribute("tcRegional", tcRegional);
 		return "redirect:/administrador/consultaEscuelaRegion";
 
+	}
+	
+	@GetMapping("reestablecerPassword")
+	public String reestablecerPassword(@RequestParam(required = false) Long id, TcRegional tcRegional, RedirectAttributes attributes) {
+		
+        TcEscuela tcEscuela = escuelaService.obtenerEscuelaId(id);
+		
+		Usuario usuarioConsultado= usuarioService.obterUsuarioUsername(tcEscuela.getsCct());
+		
+		usuarioConsultado.setPassword(passwordEncoder.encode(tcEscuela.getsCct()));
+		
+		usuarioService.guardaUsuario(usuarioConsultado);
+		tcRegional.setnId(nIdRegion);
+		attributes.addFlashAttribute("msg", "Contraseña reestablecida correctamente");
+		attributes.addFlashAttribute("tcRegional", tcRegional);
+		return "redirect:/administrador/consultaEscuelaRegion";
 	}
 	
 	
