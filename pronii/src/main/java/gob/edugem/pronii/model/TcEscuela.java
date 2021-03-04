@@ -76,6 +76,33 @@ public class TcEscuela implements Serializable{
 	@Column(name = "N_HORASINDETERMINADAS")
 	private Integer nHorasIndeterminadas;
 	
+	@Column(name = "N_GRUPOPRIMERO")
+	private Integer nGrupoPrimero;
+	
+	@Column(name = "N_GRUPOSEGUNDO")
+	private Integer nGrupoSegundo;
+	
+	@Column(name = "N_GRUPOTERCERO")
+	private Integer nGrupoTercero;
+	
+	@Column(name = "N_ALUMNOSPRIMEROH")
+	private Integer nAlumnosPrimeroH;
+	
+	@Column(name = "N_ALUMNOSSEGUNDOH")
+	private Integer nAlumnosSegundoH;
+	
+	@Column(name = "N_ALUMNOSTERCEROH")
+	private Integer nAlumnosTerceroH;
+	
+	@Column(name = "N_ALUMNOSPRIMEROM")
+	private Integer nAlumnosPrimeroM;
+	
+	@Column(name = "N_ALUMNOSSEGUNDOM")
+	private Integer nAlumnosSegundoM;
+	
+	@Column(name = "N_ALUMNOSTERCEROM")
+	private Integer nAlumnosTerceroM;
+	
 	
 	
 		
@@ -292,6 +319,80 @@ public class TcEscuela implements Serializable{
 	public void setnHorasIndeterminadas(Integer nHorasIndeterminadas) {
 		this.nHorasIndeterminadas = nHorasIndeterminadas;
 	}
+	
+	
+
+	public Integer getnGrupoPrimero() {
+		return nGrupoPrimero;
+	}
+
+	public void setnGrupoPrimero(Integer nGrupoPrimero) {
+		this.nGrupoPrimero = nGrupoPrimero;
+	}
+
+	public Integer getnGrupoSegundo() {
+		return nGrupoSegundo;
+	}
+
+	public void setnGrupoSegundo(Integer nGrupoSegundo) {
+		this.nGrupoSegundo = nGrupoSegundo;
+	}
+
+	public Integer getnGrupoTercero() {
+		return nGrupoTercero;
+	}
+
+	public void setnGrupoTercero(Integer nGrupoTercero) {
+		this.nGrupoTercero = nGrupoTercero;
+	}
+
+	public Integer getnAlumnosPrimeroH() {
+		return nAlumnosPrimeroH;
+	}
+
+	public void setnAlumnosPrimeroH(Integer nAlumnosPrimeroH) {
+		this.nAlumnosPrimeroH = nAlumnosPrimeroH;
+	}
+
+	public Integer getnAlumnosSegundoH() {
+		return nAlumnosSegundoH;
+	}
+
+	public void setnAlumnosSegundoH(Integer nAlumnosSegundoH) {
+		this.nAlumnosSegundoH = nAlumnosSegundoH;
+	}
+
+	public Integer getnAlumnosTerceroH() {
+		return nAlumnosTerceroH;
+	}
+
+	public void setnAlumnosTerceroH(Integer nAlumnosTerceroH) {
+		this.nAlumnosTerceroH = nAlumnosTerceroH;
+	}
+
+	public Integer getnAlumnosPrimeroM() {
+		return nAlumnosPrimeroM;
+	}
+
+	public void setnAlumnosPrimeroM(Integer nAlumnosPrimeroM) {
+		this.nAlumnosPrimeroM = nAlumnosPrimeroM;
+	}
+
+	public Integer getnAlumnosSegundoM() {
+		return nAlumnosSegundoM;
+	}
+
+	public void setnAlumnosSegundoM(Integer nAlumnosSegundoM) {
+		this.nAlumnosSegundoM = nAlumnosSegundoM;
+	}
+
+	public Integer getnAlumnosTerceroM() {
+		return nAlumnosTerceroM;
+	}
+
+	public void setnAlumnosTerceroM(Integer nAlumnosTerceroM) {
+		this.nAlumnosTerceroM = nAlumnosTerceroM;
+	}
 
 	@Override
 	public String toString() {
@@ -299,10 +400,17 @@ public class TcEscuela implements Serializable{
 				+ ", sDomicilio=" + sDomicilio + ", sColonia=" + sColonia + ", sLocalidad=" + sLocalidad
 				+ ", nIdMunicipio=" + nIdMunicipio + ", sTelefono=" + sTelefono + ", sCorreo=" + sCorreo
 				+ ", nIdZonaEscolar=" + nIdZonaEscolar + ", nEstatus=" + nEstatus + ", nIdModalidad=" + nIdModalidad
-				+ ", nIdDirector=" + nIdDirector + ", tcTurno=" + tcTurno + ", tcMunicipio=" + tcMunicipio
-				+ ", tcZonaEscolar=" + tcZonaEscolar + ", tcModalidad=" + tcModalidad + ", tcDirectores=" + tcDirectores
-				+ "]";
+				+ ", nIdDirector=" + nIdDirector + ", nIdRegional=" + nIdRegional + ", nHorasDeterminadas="
+				+ nHorasDeterminadas + ", nHorasIndeterminadas=" + nHorasIndeterminadas + ", nGrupoPrimero="
+				+ nGrupoPrimero + ", nGrupoSegundo=" + nGrupoSegundo + ", nGrupoTercero=" + nGrupoTercero
+				+ ", nAlumnosPrimeroH=" + nAlumnosPrimeroH + ", nAlumnosSegundoH=" + nAlumnosSegundoH
+				+ ", nAlumnosTerceroH=" + nAlumnosTerceroH + ", nAlumnosPrimeroM=" + nAlumnosPrimeroM
+				+ ", nAlumnosSegundoM=" + nAlumnosSegundoM + ", nAlumnosTerceroM=" + nAlumnosTerceroM + ", tcTurno="
+				+ tcTurno + ", tcMunicipio=" + tcMunicipio + ", tcZonaEscolar=" + tcZonaEscolar + ", tcModalidad="
+				+ tcModalidad + ", tcDirectores=" + tcDirectores + ", tcRegional=" + tcRegional + "]";
 	}
+
+	
 	
 	
 	

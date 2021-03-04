@@ -35,7 +35,7 @@
 											<div class="col-md-4">
 												<div class="form-group">
 													<label class="bmd-label-floating">Ingresa la curp del director que desea asignar a la escuela</label> <input
-														type="text" class="form-control" th:name="curp">
+														type="text" class="form-control" required="required" minlength="18" maxlength="18" th:name="curp">
 												</div>
 											</div>
 											<div class="col-md-4 text-center">
@@ -87,7 +87,7 @@
 											<div class="col-md-3">
 												<div class="form-group">
 													<label class="bmd-label-floating">*Teléfono</label> <input
-														type="tel" class="form-control" th:field="*{sTelefono}" required="required">
+														type="tel" class="form-control" th:field="*{sTelefono}" minlength="10" maxlength="10" required="required">
 												</div>
 											</div>
 											<div class="col-md-4">
@@ -116,7 +116,9 @@
 					</div>
 				</div>
 			</div>
-			<footer class="footer"> </footer>
+			<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 		</div>
 	</div>
 

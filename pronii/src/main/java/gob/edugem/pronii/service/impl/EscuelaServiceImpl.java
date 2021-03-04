@@ -56,7 +56,17 @@ public class EscuelaServiceImpl implements EscuelaService {
 	public String guardaEscuela(TcEscuela tcEscuela) {
 		
 		if (tcEscuela.getnId() != null ) { // si tiene id actualiza los datos. 
-			escuelaRepository.save(tcEscuela);
+			TcEscuela tcEscuelaConsultada= escuelaRepository.findById(tcEscuela.getnId()).get();
+			tcEscuelaConsultada.setnGrupoPrimero(tcEscuela.getnGrupoPrimero());
+			tcEscuelaConsultada.setnGrupoSegundo(tcEscuela.getnGrupoSegundo());
+			tcEscuelaConsultada.setnGrupoTercero(tcEscuela.getnGrupoTercero());
+			tcEscuelaConsultada.setnAlumnosPrimeroH(tcEscuela.getnAlumnosPrimeroH());
+			tcEscuelaConsultada.setnAlumnosPrimeroM(tcEscuela.getnAlumnosPrimeroM());
+			tcEscuelaConsultada.setnAlumnosSegundoH(tcEscuela.getnAlumnosSegundoH());
+			tcEscuelaConsultada.setnAlumnosSegundoM(tcEscuela.getnAlumnosSegundoM());
+			tcEscuelaConsultada.setnAlumnosTerceroH(tcEscuela.getnAlumnosTerceroH());
+			tcEscuelaConsultada.setnAlumnosTerceroM(tcEscuela.getnAlumnosTerceroM());
+			escuelaRepository.save(tcEscuelaConsultada);
 			return Constantes.actualizar;
 		}else {// si no verifica que la cct que intenta registrar no exista.
 			if (escuelaRepository.findBysCct(tcEscuela.getsCct()).size() > 0) {

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
+	name='viewport' />
+
+<title>Index</title>
+<th:block th:include="fragments/cabecera :: cabecera"></th:block>
+</head>
+<body class="">
+	<div class="wrapper ">
+
+		<div th:insert="fragments/menu :: menu-principal"></div>
+
+		<div class="main-panel">
+			<!-- Navbar horizontal -->
+			<div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="card-header card-header-rose card-header-icon">
+									<div class="card-icon">
+										<i class="material-icons">assignment</i>
+									</div>
+									<h4 class="card-title">Administración de matrícula</h4>
+								</div>
+
+								<!-- div para formulario de Grupos, alumnos horas-->
+								<div class="row">
+									<div class="col-md-12">
+										<div class="col-md-12 text-center">
+											<h2 >Registro de Matrícula</h2>
+										</div>
+										<br> <br>
+
+										<form  th:action="@{/escuela/guardaMatriculaGeneral}" method="post"
+										th:object="${tcEscuela}">
+											<input type="hidden" th:field="*{nId}"/>																																
+											<div class="row col-md-12">
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-header card-header-icon card-header-rose">
+															<h3 class="card-title text-center">Número total de Grupos</h3>
+														</div>
+														<div class="card-body">
+
+															<div class="row">
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label class="bmd-label-floating">Primer Grado</label>
+																		<input type="number" th:field="*{nGrupoPrimero}" class="form-control">
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label class="bmd-label-floating">Segundo
+																			Grado</label> <input type="number" th:field="*{nGrupoSegundo}" class="form-control">
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group">
+																		<label class="bmd-label-floating">Tercer Grado</label>
+																		<input type="number" th:field="*{nGrupoTercero}" class="form-control">
+																	</div>
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- Registro de numero de alumnos -->
+											<div class="row col-md-12">
+												<div class="col-md-12">
+													<div class="card">
+														<div class="card-header card-header-icon card-header-rose">
+															<h3 class="card-title text-center">Número total de Alumnos</h3>
+														</div>
+														<div class="card-body">
+															<div class="row col-md-12">
+																<div class="col-md-4">
+																	<div class="card">
+																		<div class="card-title text-center">Alumnos
+																			Primer Grado</div>
+																		<div class="card-body">
+																			<div class="row">
+																				<div class="col-md-6">
+																					<div class="form-group">
+																						<label class="bmd-label-floating">Hombres</label>
+																						<input type="number" th:field="*{nAlumnosPrimeroH}" class="form-control">
+																					</div>
+																				</div>
+																				<div class="col-md-6">
+																					<div class="form-group">
+																						<label class="bmd-label-floating">Mujeres</label>
+																						<input type="number" th:field="*{nAlumnosPrimeroM}" class="form-control">
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="card">
+																		<div class="card-title text-center">Alumnos
+																			Segundo Grado</div>
+																		<div class="card-body">
+																			<div class="row">
+																				<div class="col-md-6">
+																					<div class="form-group">
+																						<label class="bmd-label-floating">Hombres</label>
+																						<input type="number" th:field="*{nAlumnosSegundoH}" class="form-control">
+																					</div>
+																				</div>
+																				<div class="col-md-6">
+																					<div class="form-group">
+																						<label class="bmd-label-floating">Mujeres</label>
+																						<input type="number" th:field="*{nAlumnosSegundoM}" class="form-control">
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="card">
+																		<div class="card-title text-center">Alumnos
+																			Tercer Grado</div>
+																		<div class="card-body">
+																			<div class="row">
+																				<div class="col-md-6">
+																					<div class="form-group">
+																						<label class="bmd-label-floating">Hombres</label>
+																						<input type="number" th:field="*{nAlumnosTerceroH}" class="form-control">
+																					</div>
+																				</div>
+																				<div class="col-md-6">
+																					<div class="form-group">
+																						<label class="bmd-label-floating">Mujeres</label>
+																						<input type="number" th:field="*{nAlumnosTerceroM}" class="form-control">
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 text-center">
+												<button type="submit" class="btn btn-rose pull-center">Guardar</button>
+												<div class="clearfix"></div>
+											</div>
+											
+											
+											<br>
+											<br>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+
+				<footer >
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
+			</div>
+		</div>
+
+		<th:block th:include="fragments/scripts :: script"></th:block>
+	</div>
+</body>
+
+
+</html>

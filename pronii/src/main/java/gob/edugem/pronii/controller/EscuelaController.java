@@ -1,15 +1,20 @@
 package gob.edugem.pronii.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +34,7 @@ import gob.edugem.pronii.service.MunicipioService;
 import gob.edugem.pronii.service.PreProfService;
 import gob.edugem.pronii.service.RegionalService;
 import gob.edugem.pronii.service.SexoService;
+import gob.edugem.pronii.service.TipoLicenciaService;
 import gob.edugem.pronii.service.TurnoService;
 import gob.edugem.pronii.service.UsuarioService;
 import gob.edugem.pronii.service.ZonaEscolarService;
@@ -73,6 +79,9 @@ public class EscuelaController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private TipoLicenciaService tipoLicenciaService;
+	
 
 	public String nId;
 	public Long nIdEscuela;
@@ -103,8 +112,11 @@ public class EscuelaController {
 
 	@GetMapping("consultaCurp")
 	public String consultaCurp(@RequestParam(required = false) String curp, TcDocentes tcDocentes, Model model) {
-
+		System.err.println("nIdEscuela controller: "+nIdEscuela);
 		tcDocentes = docenteEscuelaService.consultaDocenteCurp(curp);
+		
+		
+		
 		nId = "actualizar";
 		System.out.println("primer consulta " + tcDocentes);
 
@@ -119,6 +131,19 @@ public class EscuelaController {
 			nId = "actualizar";
 			tcDocentes.setsFechaNacimiento(tcDocentesRenapo.getsFechaNacimiento());
 			System.out.println("consulta renapo: " + tcDocentes.toString());
+		}
+		
+        List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(nIdEscuela, tcDocentes.getnId());
+		
+		if (listaRelacion.size() > 0) {
+			for (TwEscuelaDocentes twEscuelaDocentes : listaRelacion) {
+				tcDocentes.setnIdTieneLicencia(twEscuelaDocentes.getnTieneLicencia());
+				tcDocentes.setnIdTipoLicencia(twEscuelaDocentes.getnIdTipoLicencia());
+				tcDocentes.setsFechaInicioLicencia(twEscuelaDocentes.getdFechaInicioLicencia());
+				tcDocentes.setsFechaFinLicencia(twEscuelaDocentes.getdFechaFinLicencia());
+			}
+		}else {
+			tcDocentes.setnIdTieneLicencia(2L);
 		}
 
 		model.addAttribute("nId", nId);
@@ -146,6 +171,11 @@ public class EscuelaController {
 		twEscuelaDocentes.setnAlumnosTerceroH(0);
 		twEscuelaDocentes.setnAlumnosTerceroM(0);
 		twEscuelaDocentes.setnEstatus(0);
+		twEscuelaDocentes.setnTieneLicencia(tcDocentes.getnIdTieneLicencia());
+		twEscuelaDocentes.setnIdTipoLicencia(tcDocentes.getnIdTipoLicencia());
+		twEscuelaDocentes.setdFechaInicioLicencia(tcDocentes.getsFechaInicioLicencia());
+		twEscuelaDocentes.setdFechaFinLicencia(tcDocentes.getsFechaFinLicencia());
+		
 
 		if (tcDocentes.getnId() == null) {
 
@@ -183,7 +213,6 @@ public class EscuelaController {
 				attributes.addFlashAttribute("msg","El Docente que intenta agregar ya se encuentra registrado en la escuela");
 			} else {
 				docenteEscuelaService.guardaDocente(tcDocentes);
-				twEscuelaDocentes.setnIdEscuela(nIdEscuela);
 				twEscuelaDocentes.setnIdDocente(tcDocentes.getnId());
 				docenteEscuelaService.guardaDocenteEscuela(twEscuelaDocentes);
 				attributes.addFlashAttribute("msg", "Docente agregado a la escuela correctamente");
@@ -214,11 +243,44 @@ public class EscuelaController {
 	
 	@PostMapping("guardaMatricula")
 	public String registraMatricula(TwEscuelaDocentes twEscuelaDocentes, RedirectAttributes attributes ) {
+		
+		TwEscuelaDocentes twEscuelaDocentesConsultado= docenteEscuelaService.consultaDocenteEscuela(twEscuelaDocentes.getnId());
+		
 		twEscuelaDocentes.setnEstatus(1);
+		twEscuelaDocentes.setnTieneLicencia(twEscuelaDocentesConsultado.getnTieneLicencia());
+		twEscuelaDocentes.setnIdTipoLicencia(twEscuelaDocentesConsultado.getnIdTipoLicencia());
+		twEscuelaDocentes.setdFechaInicioLicencia(twEscuelaDocentesConsultado.getdFechaInicioLicencia());
+		twEscuelaDocentes.setdFechaFinLicencia(twEscuelaDocentesConsultado.getdFechaFinLicencia());
 		docenteEscuelaService.guardaDocenteEscuela(twEscuelaDocentes);
 		attributes.addFlashAttribute("nIdEscuela", nIdEscuela);
-		attributes.addFlashAttribute("msg", "Matricula registrada correctamente!");
+		attributes.addFlashAttribute("msg", "Matrícula del docente registrada correctamente!");
 		return "redirect:/escuela/consultaDocentes";
+		
+	}
+	
+	@GetMapping("consultaMatriculaGeneral")
+	public String consultaMatriculaGeneral(Authentication auth ,Model model, TcEscuela tcEscuela) {	
+		tcEscuela = escuelaService.obtenerEscuelaCct(auth.getName());
+//		if (tcEscuela.getnIdDirector() != null) {
+//			String sNombreDirector= directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector()).getsNombre();
+//			model.addAttribute("sNombreDirector", sNombreDirector);
+//		}else {
+//			model.addAttribute("sNombreDirector", "No hay Director Asignado a esta escuela");
+//		}
+		
+		//model.addAttribute("nId", "actualizacion");
+		model.addAttribute("tcEscuela", tcEscuela);
+		return "escuela/registroMatriculaGeneral";
+	}
+	
+	@PostMapping("guardaMatriculaGeneral")
+	public String registraMatriculaGeneral(TcEscuela tcEscuela, RedirectAttributes attributes ) {
+		
+		
+		escuelaService.guardaEscuela(tcEscuela);
+		attributes.addFlashAttribute("nIdEscuela", nIdEscuela);
+		attributes.addFlashAttribute("msg", "Matrícula registrada correctamente!");
+		return "redirect:/";
 		
 	}
 
@@ -310,7 +372,14 @@ public class EscuelaController {
 		model.addAttribute("ListaZona", zonaEscolarService.obtenerZonaEscolarEstatus());
 		model.addAttribute("ListaMunicipio", municipioService.obtenerMunicipioEstatus());
 		model.addAttribute("ListaModalidad", modalidadService.obtenerModalidadEstatus());
+		model.addAttribute("listaTipoLicencia", tipoLicenciaService.obtenerTipoLicencias());
 		model.addAttribute("nIdEscuela", nIdEscuela);
+	}
+	
+	@InitBinder
+	public void initBinder(WebDataBinder webDataBinder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
 }

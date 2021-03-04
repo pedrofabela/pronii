@@ -30,8 +30,8 @@
 									<h4 class="card-title">Administración de docentes</h4>
 								</div>
 								<div class="col-md-12 text-center">
-									<h2>Docentes registrados:</h2>
-									<label th:text="${Director}"></label>
+									<h2>Docentes registrados</h2>
+									<!-- <label th:text="${Director}"></label> -->
 								</div>
 								
 								<div class="card-body">
@@ -112,7 +112,9 @@
 				</div>
 
 
-				<footer class="footer"> </footer>
+				<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 			</div>
 		</div>
 

@@ -1,6 +1,7 @@
 package gob.edugem.pronii.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 @Entity
 @Table(name = "TC_DOCENTES")
 public class TcDocentes implements Serializable{
@@ -55,6 +57,17 @@ public class TcDocentes implements Serializable{
 	private String sFechaIngresoSubsistema;
 	@Column(name = "N_IDESCUELARADI")
 	private String nIdEscuelaRadi;
+	@Column(name = "S_NOMBREPREPRO")
+	private String sNombrePrePro;
+	@Transient
+	private Long nIdTieneLicencia;
+	@Transient
+	private Long nIdTipoLicencia;
+	@Transient
+	private Date sFechaInicioLicencia;
+	@Transient
+	private Date sFechaFinLicencia;
+	
 	
 	
 	@OneToOne(fetch = FetchType.LAZY)
@@ -180,13 +193,57 @@ public class TcDocentes implements Serializable{
 	public void setTcEscuela(TcEscuela tcEscuela) {
 		this.tcEscuela = tcEscuela;
 	}
+	public String getsNombrePrePro() {
+		return sNombrePrePro;
+	}
+	public void setsNombrePrePro(String sNombrePrePro) {
+		this.sNombrePrePro = sNombrePrePro;
+	}
+	
+	
+	
+	
+	public Long getnIdTieneLicencia() {
+		return nIdTieneLicencia;
+	}
+	public void setnIdTieneLicencia(Long nIdTieneLicencia) {
+		this.nIdTieneLicencia = nIdTieneLicencia;
+	}
+	
+	
+	
+	public Long getnIdTipoLicencia() {
+		return nIdTipoLicencia;
+	}
+	public void setnIdTipoLicencia(Long nIdTipoLicencia) {
+		this.nIdTipoLicencia = nIdTipoLicencia;
+	}
+	public Date getsFechaInicioLicencia() {
+		return sFechaInicioLicencia;
+	}
+	public void setsFechaInicioLicencia(Date sFechaInicioLicencia) {
+		this.sFechaInicioLicencia = sFechaInicioLicencia;
+	}
+	public Date getsFechaFinLicencia() {
+		return sFechaFinLicencia;
+	}
+	public void setsFechaFinLicencia(Date sFechaFinLicencia) {
+		this.sFechaFinLicencia = sFechaFinLicencia;
+	}
 	@Override
 	public String toString() {
 		return "TcDocentes [nId=" + nId + ", sCurp=" + sCurp + ", sNombre=" + sNombre + ", sPrimerApellido="
 				+ sPrimerApellido + ", sSegundoApellido=" + sSegundoApellido + ", nIdSexo=" + nIdSexo
 				+ ", sFechaNacimiento=" + sFechaNacimiento + ", sClaveSerPub=" + sClaveSerPub + ", sTelefono="
-				+ sTelefono + ", nEstatus=" + nEstatus + ", sCorreo=" + sCorreo + ", tcGenero=" + tcGenero + "]";
+				+ sTelefono + ", nEstatus=" + nEstatus + ", sCorreo=" + sCorreo + ", nIdPreProfe=" + nIdPreProfe
+				+ ", sFechaIngresoSubsistema=" + sFechaIngresoSubsistema + ", nIdEscuelaRadi=" + nIdEscuelaRadi
+				+ ", sNombrePrePro=" + sNombrePrePro + ", nIdTipoLicencia=" + nIdTipoLicencia
+				+ ", sFechaInicioLicencia=" + sFechaInicioLicencia + ", ssFechaFinLicencia=" + sFechaFinLicencia
+				+ ", tcGenero=" + tcGenero + ", tcPreProfe=" + tcPreProfe + ", tcEscuela=" + tcEscuela + "]";
 	}
+	
+	
+	
 	
 	
 	

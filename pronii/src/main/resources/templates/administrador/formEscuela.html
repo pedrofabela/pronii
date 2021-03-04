@@ -33,9 +33,9 @@
 								<div class="card-body">
 									<form th:action="@{/administrador/guardaEscuela}" method="post"
 										th:object="${tcEscuela}" id="FormEscuela">
-										
-										<input type="hidden" name="nId" th:field="*{nId}">
-										<input type="hidden" name="nId" th:field="*{nIdDirector}">
+
+										<input type="hidden" name="nId" th:field="*{nId}"> <input
+											type="hidden" name="nId" th:field="*{nIdDirector}">
 										<div class="row">
 											<div class="col-md-3">
 												<div class="form-group">
@@ -141,7 +141,8 @@
 											<div class="col-md-4">
 												<select class="selectpicker"
 													data-style="select-with-transition" title="*Region"
-													data-size="7" th:field="*{nIdRegional}" required="required" readonly="true">
+													data-size="7" th:field="*{nIdRegional}" required="required"
+													readonly="true">
 													<option value="">Elegir Región</option>
 													<option th:each="vari:${ListaRegionales}"
 														th:value="${vari.nId}" th:text="${vari.sNombre}"></option>
@@ -149,14 +150,165 @@
 												</select>
 											</div>
 										</div>
+										<br>
+										<br>
+										<!-- div para formulario de Grupos, alumnos horas-->
+										<div class="row" th:if="${nId != null} ">
+											<div class="col-md-12">
+												<div class="col-md-12 text-center">
+													<h2>Matrícula Registrada</h2>
+												</div>
+
+												<input type="hidden" th:field="*{nId}" />
+												<div class="row col-md-12">
+													<div class="col-md-12">
+														<div class="card">
+															<div
+																class="card-header card-header-icon card-header-rose">
+																<h3 class="card-title text-center">Número total de
+																	Grupos</h3>
+															</div>
+															<div class="card-body">
+
+																<div class="row">
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="bmd-label-floating">Primer
+																				Grado</label> <input type="number"
+																				th:field="*{nGrupoPrimero}" class="form-control"
+																				readonly="readonly">
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="bmd-label-floating">Segundo
+																				Grado</label> <input type="number"
+																				th:field="*{nGrupoSegundo}" class="form-control"
+																				readonly="readonly">
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="form-group">
+																			<label class="bmd-label-floating">Tercer
+																				Grado</label> <input type="number"
+																				th:field="*{nGrupoTercero}" class="form-control"
+																				readonly="readonly">
+																		</div>
+																	</div>
+
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<!-- Registro de numero de alumnos -->
+												<div class="row col-md-12">
+													<div class="col-md-12">
+														<div class="card">
+															<div
+																class="card-header card-header-icon card-header-rose">
+																<h3 class="card-title text-center">Número total de
+																	Alumnos</h3>
+															</div>
+															<div class="card-body">
+																<div class="row col-md-12">
+																	<div class="col-md-4">
+																		<div class="card">
+																			<div class="card-title text-center">Alumnos
+																				Primer Grado</div>
+																			<div class="card-body">
+																				<div class="row">
+																					<div class="col-md-6">
+																						<div class="form-group">
+																							<label class="bmd-label-floating">Hombres</label>
+																							<input type="number"
+																								th:field="*{nAlumnosPrimeroH}"
+																								class="form-control" readonly="readonly">
+																						</div>
+																					</div>
+																					<div class="col-md-6">
+																						<div class="form-group">
+																							<label class="bmd-label-floating">Mujeres</label>
+																							<input type="number"
+																								th:field="*{nAlumnosPrimeroM}"
+																								class="form-control" readonly="readonly">
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="card">
+																			<div class="card-title text-center">Alumnos
+																				Segundo Grado</div>
+																			<div class="card-body">
+																				<div class="row">
+																					<div class="col-md-6">
+																						<div class="form-group">
+																							<label class="bmd-label-floating">Hombres</label>
+																							<input type="number"
+																								th:field="*{nAlumnosSegundoH}"
+																								class="form-control" readonly="readonly">
+																						</div>
+																					</div>
+																					<div class="col-md-6">
+																						<div class="form-group">
+																							<label class="bmd-label-floating">Mujeres</label>
+																							<input type="number"
+																								th:field="*{nAlumnosSegundoM}"
+																								class="form-control" readonly="readonly">
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="col-md-4">
+																		<div class="card">
+																			<div class="card-title text-center">Alumnos
+																				Tercer Grado</div>
+																			<div class="card-body">
+																				<div class="row">
+																					<div class="col-md-6">
+																						<div class="form-group">
+																							<label class="bmd-label-floating">Hombres</label>
+																							<input type="number"
+																								th:field="*{nAlumnosTerceroH}"
+																								class="form-control" readonly="readonly">
+																						</div>
+																					</div>
+																					<div class="col-md-6">
+																						<div class="form-group">
+																							<label class="bmd-label-floating">Mujeres</label>
+																							<input type="number"
+																								th:field="*{nAlumnosTerceroM}"
+																								class="form-control" readonly="readonly">
+																						</div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+											</div>
+										</div>
+
+
 										<br> <br>
 										<div class="category form-category">*Campos Requeridos</div>
-										<button type="submit"  th:if="${nId == null} " class="btn btn-rose pull-right">Guardar</button>
-										<button type="submit"  th:if="${nId != null} " class="btn btn-success pull-right">Actualizar</button>
-										<br>
-										<br>
-										<br>
-										<div th:if="${msg != null}" class='alert alert-danger' th:text="${msg}" role='alert'></div>
+										<button type="submit" th:if="${nId == null} "
+											class="btn btn-rose pull-right">Guardar</button>
+										<button type="submit" th:if="${nId != null} "
+											class="btn btn-success pull-right">Actualizar</button>
+										<br> <br> <br>
+										<div th:if="${msg != null}" class='alert alert-danger'
+											th:text="${msg}" role='alert'></div>
 										<div class="clearfix"></div>
 									</form>
 								</div>
@@ -165,7 +317,9 @@
 					</div>
 				</div>
 			</div>
-			<footer class="footer"> </footer>
+			<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 		</div>
 	</div>
 

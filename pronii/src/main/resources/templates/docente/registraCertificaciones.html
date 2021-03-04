@@ -54,7 +54,7 @@
 												<input type="hidden" th:field="*{nId}">
 												<div class="row">
 													<div class="col-md-4">
-                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" data-style="select-with-transition"  title="Tipo de certificación" data-size="7">
+                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" data-style="select-with-transition"  title="Tipo de certificación" data-size="7" required="required">
                             
                             								<option th:each="tipoCerNivel: ${listaCerNivel}" th:value="${tipoCerNivel.nId}" th:text="${tipoCerNivel.sNombre}"></option>
                             							   
@@ -63,7 +63,7 @@
                           								</select>
                         							</div>
 													<div class="col-md-4">
-														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7">
+														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7" required="required">
                             
                             								<option th:each="nivelIdioma: ${listaNivelIdioma}" th:value="${nivelIdioma.nId}" th:text="${nivelIdioma.sNombre}"></option>
                             							    
@@ -71,14 +71,14 @@
 													</div>
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionNivel" placeholder="Fecha de emisión de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionNivel" placeholder="Fecha de emisión de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 												</div>
 												<div class="row">
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaVencimiento}" type="text" class="form-control" id="fechaVencimientoNivel" placeholder="Fecha de vencimiento de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaVencimiento}" type="text" class="form-control" id="fechaVencimientoNivel" placeholder="Fecha de vencimiento de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 													
@@ -99,7 +99,7 @@
 												<input type="hidden" th:field="*{nId}">
 												<div class="row">
 													<div class="col-md-4">
-														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7">
+														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7" required="required">
                             
                             								<option th:each="nivelCenni: ${listaNivelIdiomaCenni}" th:value="${nivelCenni.nId}" th:text="${nivelCenni.sNombre}"></option>
                             							    
@@ -107,12 +107,12 @@
 													</div>
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionCenni" placeholder="Fecha de emisión de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionCenni" placeholder="Fecha de emisión de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
                         							<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoCenni" placeholder="Fecha de vencimiento de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoCenni" placeholder="Fecha de vencimiento de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 												</div>																					
@@ -132,7 +132,7 @@
 												<input type="hidden" th:field="*{nId}">
 												<div class="row">
 													<div class="col-md-3">
-                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" data-style="select-with-transition"  title="Tipo de certificación" data-size="7">
+                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" data-style="select-with-transition"  title="Tipo de certificación" data-size="7" required="required">
                             
                             								<option th:each="tipoCerMet: ${listaCerMetodologia}" th:value="${tipoCerMet.nId}" th:text="${tipoCerMet.sNombre}"></option>
                             							   
@@ -140,21 +140,21 @@
                           								</select>
                         							</div>
 													<div class="col-md-3">
-														<select th:field="*{nIdModulo1}" class="selectpicker" data-style="select-with-transition"  title="Módulo 1" data-size="7">
+														<select th:field="*{nIdModulo1}" class="selectpicker" data-style="select-with-transition"  title="Módulo 1" data-size="7" required="required">
                             
                             								<option th:each="modulo1: ${listaModulo}" th:value="${modulo1.nId}" th:text="${modulo1.sNombre}"></option>
                             							   
                           								</select>
 													</div>
 													<div class="col-md-3">
-														<select th:field="*{nIdModulo2}" class="selectpicker" data-style="select-with-transition"  title="Módulo 2" data-size="7">
+														<select th:field="*{nIdModulo2}" class="selectpicker" data-style="select-with-transition"  title="Módulo 2" data-size="7" required="required">
                             
                             								<option th:each="modulo2: ${listaModulo}" th:value="${modulo2.nId}" th:text="${modulo2.sNombre}"></option>
                             							   
                           								</select>
 													</div>
 													<div class="col-md-3">
-														<select th:field="*{nIdModulo3}" class="selectpicker" data-style="select-with-transition"  title="Módulo 3" data-size="7">
+														<select th:field="*{nIdModulo3}" class="selectpicker" data-style="select-with-transition"  title="Módulo 3" data-size="7" required="required">
                             
                             								<option th:each="modulo3: ${listaModulo}" th:value="${modulo3.nId}" th:text="${modulo3.sNombre}"></option>
                             							   
@@ -165,12 +165,12 @@
 												<div class="row">
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionMetodo" placeholder="Fecha de emisión de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionMetodo" placeholder="Fecha de emisión de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoMetodo" placeholder="Fecha de vencimiento de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoMetodo" placeholder="Fecha de vencimiento de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 													
@@ -188,7 +188,9 @@
 					</div>
 				</div>
 			</div>
-			<footer class="footer"> </footer>
+			<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 		</div>
 	</div>
 

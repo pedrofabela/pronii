@@ -41,7 +41,12 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 				
 		// El formulario de Login no requiere autenticacion
-				.and().formLogin().loginPage("/login").permitAll();
+				.and()
+				.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl ("/", true) // Path when login is successful
+				.permitAll();
+			
 	}
 	
 	/**

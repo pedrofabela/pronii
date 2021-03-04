@@ -27,14 +27,15 @@
 									<div class="card-icon">
 										<i class="material-icons">assignment</i>
 									</div>
-									<h4 class="card-title">Administración de matricula</h4>
+									<h4 class="card-title">Administración de matrícula</h4>
 								</div>
 
 								<!-- div para formulario de Grupos, alumnos horas-->
 								<div class="row">
 									<div class="col-md-12">
 										<div class="col-md-12 text-center">
-											<h2>Registro de Matricula</h2>
+											<h2 th:text="'Registro de Grupos y alumnos que atiende el docente:'+' '+${twEscuelaDocentes.tcDocentes.sNombre}
+											+' '+${twEscuelaDocentes.tcDocentes.sPrimerApellido}+' '+${twEscuelaDocentes.tcDocentes.sSegundoApellido}"></h2>
 										</div>
 										<br> <br>
 
@@ -210,7 +211,9 @@
 				</div>
 
 
-				<footer class="footer"> </footer>
+				<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 			</div>
 		</div>
 

@@ -11,7 +11,7 @@ import gob.edugem.pronii.model.TcNivelCertificacion;
 @Repository
 public interface NivelCertificacionRepository extends JpaRepository<TcNivelCertificacion, Long> {
 	
-	@Query("select t from TcNivelCertificacion t where t.nIdTipoCertificacion=:nIdTipoCertificacion and t.nEstatus=:nEstatus")
+	@Query("select t from TcNivelCertificacion t where t.nIdTipoCertificacion=:nIdTipoCertificacion and t.nEstatus=:nEstatus order by t.nId")
 	public List<TcNivelCertificacion> findBynIdTipoCertificacionAndnEstatus(Long nIdTipoCertificacion, Integer nEstatus);
 	
 

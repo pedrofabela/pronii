@@ -1,6 +1,7 @@
 package gob.edugem.pronii.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -72,6 +73,20 @@ public class TwEscuelaDocentes implements Serializable{
 	
 	@Column(name = "N_ESTATUS")
 	private Integer nEstatus;
+	
+	@Column(name = "N_TIENELICENCIA")
+	private Long nTieneLicencia;
+	
+	@Column(name = "N_IDTIPOLICENCIA")
+	private Long nIdTipoLicencia;
+	
+	@Column(name = "D_FECHAINICIOLICENCIA")
+	private Date  dFechaInicioLicencia;
+	
+	@Column(name = "D_FECHAFINLICENCIA")
+	private Date dFechaFinLicencia;
+	
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "N_IDESCUELA", referencedColumnName = "N_ID", updatable = false, insertable = false)
@@ -225,6 +240,40 @@ public class TwEscuelaDocentes implements Serializable{
 
 	public void setTcDocentes(TcDocentes tcDocentes) {
 		this.tcDocentes = tcDocentes;
+	}
+
+	
+
+	public Long getnTieneLicencia() {
+		return nTieneLicencia;
+	}
+
+	public void setnTieneLicencia(Long nTieneLicencia) {
+		this.nTieneLicencia = nTieneLicencia;
+	}
+
+	public Long getnIdTipoLicencia() {
+		return nIdTipoLicencia;
+	}
+
+	public void setnIdTipoLicencia(Long nIdTipoLicencia) {
+		this.nIdTipoLicencia = nIdTipoLicencia;
+	}
+
+	public Date getdFechaInicioLicencia() {
+		return dFechaInicioLicencia;
+	}
+
+	public void setdFechaInicioLicencia(Date dFechaInicioLicencia) {
+		this.dFechaInicioLicencia = dFechaInicioLicencia;
+	}
+
+	public Date getdFechaFinLicencia() {
+		return dFechaFinLicencia;
+	}
+
+	public void setdFechaFinLicencia(Date dFechaFinLicencia) {
+		this.dFechaFinLicencia = dFechaFinLicencia;
 	}
 	
 	

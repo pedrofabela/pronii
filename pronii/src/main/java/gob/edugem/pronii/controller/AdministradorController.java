@@ -155,8 +155,18 @@ public class AdministradorController {
 	
 	
 	@GetMapping("agregarDirector")
-	public String agregarDirector(@RequestParam(required = false) Long id, Model model) {		
+	public String agregarDirector(@RequestParam(required = false) Long id, TcDirectores tcDirectores,  Model model) {		
 		nIdEscuela=id;
+		
+		TcEscuela tcEscuela= escuelaService.obtenerEscuelaId(id);
+		
+		if (tcEscuela.getnIdDirector() != null) {
+			TcDirectores tcDirectorConsultado = directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector());		
+			model.addAttribute("tcDirectores", tcDirectorConsultado);
+		}else {
+			model.addAttribute("tcDirectores", null);
+		}
+			
 		return "administrador/formDirector";
 	}
 	

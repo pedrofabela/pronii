@@ -92,8 +92,8 @@
 													<td >
 													<a th:href="@{/administrador/agregarDirector (id=${escuela.nId}) }" th:unless="${escuela.nIdDirector}" class="btn btn-danger btn-link"  th:text="'FALTA ASIGNAR DIRECTOR'">
 													</a>
-													<label th:if="${escuela.nIdDirector}" class="btn btn-success btn-link"  th:text="${escuela.tcDirectores.sNombre}+' '+ ${escuela.tcDirectores.sApellidoPaterno} +' '+${escuela.tcDirectores.sApellidoMaterno} ">
-													</label>
+													<a th:href="@{/administrador/agregarDirector (id=${escuela.nId}) }" th:if="${escuela.nIdDirector}" class="btn btn-success btn-link"  th:text="${escuela.tcDirectores.sNombre}+' '+ ${escuela.tcDirectores.sApellidoPaterno} +' '+${escuela.tcDirectores.sApellidoMaterno} ">
+													</a>
 													</td>
 													<td th:text="${escuela.tcZonaEscolar.sNombre}"></td>
 													<td class="td-actions text-right"><a
@@ -130,10 +130,9 @@
 				</div>
 
 
-				<footer class="footer">
-			
-
-				</footer>
+				<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 			</div>
 		</div>
 

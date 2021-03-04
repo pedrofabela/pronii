@@ -88,14 +88,17 @@
 			<div class="col-md-12 text-center">
 				<div th:if="${msgActualizaContra != null}" class='alert alert-success' th:text="${msgActualizaContra}" role='alert'></div>
 			</div>
+			<div class="col-md-12 text-center">
+				<div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
+			</div>
          
 
          	
          </div>
         </div>
       </div>
-      <footer class="footer">
-        
+      <footer>
+        <div th:insert="fragments/footer :: footer"></div>
       </footer>
     </div>
   </div>
