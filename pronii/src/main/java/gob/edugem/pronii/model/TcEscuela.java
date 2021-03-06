@@ -103,6 +103,34 @@ public class TcEscuela implements Serializable{
 	@Column(name = "N_ALUMNOSTERCEROM")
 	private Integer nAlumnosTerceroM;
 	
+	@Column(name = "S_PREG1")
+	private String sPreg1;
+	@Column(name = "S_PREG2")
+	private String sPreg2;
+	@Column(name = "S_PREG3")
+	private String sPreg3;
+	@Column(name = "S_PREG4")
+	private String sPreg4;
+	@Column(name = "S_PREG5")
+	private String sPreg5;
+	@Column(name = "S_PREG6")
+	private String sPreg6;
+	@Column(name = "S_PREG7")
+	private String sPreg7;
+	@Column(name = "S_PREG8")
+	private String sPreg8;
+	@Column(name = "S_PREG9")
+	private String sPreg9;
+	@Column(name = "S_PREG10")
+	private String sPreg10;
+	@Column(name = "S_PREG11")
+	private String sPreg11;
+	@Column(name = "S_PREG12")
+	private String sPreg12;
+	@Column(name = "S_PREG13")
+	private String sPreg13;
+	
+	
 	
 	
 		
@@ -392,6 +420,112 @@ public class TcEscuela implements Serializable{
 
 	public void setnAlumnosTerceroM(Integer nAlumnosTerceroM) {
 		this.nAlumnosTerceroM = nAlumnosTerceroM;
+	}
+	
+	
+
+	public String getsPreg1() {
+		return sPreg1;
+	}
+
+	public void setsPreg1(String sPreg1) {
+		this.sPreg1 = sPreg1;
+	}
+
+	public String getsPreg2() {
+		return sPreg2;
+	}
+
+	public void setsPreg2(String sPreg2) {
+		this.sPreg2 = sPreg2;
+	}
+
+	public String getsPreg3() {
+		return sPreg3;
+	}
+
+	public void setsPreg3(String sPreg3) {
+		this.sPreg3 = sPreg3;
+	}
+
+	public String getsPreg4() {
+		return sPreg4;
+	}
+
+	public void setsPreg4(String sPreg4) {
+		this.sPreg4 = sPreg4;
+	}
+
+	public String getsPreg5() {
+		return sPreg5;
+	}
+
+	public void setsPreg5(String sPreg5) {
+		this.sPreg5 = sPreg5;
+	}
+
+	public String getsPreg6() {
+		return sPreg6;
+	}
+
+	public void setsPreg6(String sPreg6) {
+		this.sPreg6 = sPreg6;
+	}
+
+	public String getsPreg7() {
+		return sPreg7;
+	}
+
+	public void setsPreg7(String sPreg7) {
+		this.sPreg7 = sPreg7;
+	}
+
+	public String getsPreg8() {
+		return sPreg8;
+	}
+
+	public void setsPreg8(String sPreg8) {
+		this.sPreg8 = sPreg8;
+	}
+
+	public String getsPreg9() {
+		return sPreg9;
+	}
+
+	public void setsPreg9(String sPreg9) {
+		this.sPreg9 = sPreg9;
+	}
+
+	public String getsPreg10() {
+		return sPreg10;
+	}
+
+	public void setsPreg10(String sPreg10) {
+		this.sPreg10 = sPreg10;
+	}
+
+	public String getsPreg11() {
+		return sPreg11;
+	}
+
+	public void setsPreg11(String sPreg11) {
+		this.sPreg11 = sPreg11;
+	}
+
+	public String getsPreg12() {
+		return sPreg12;
+	}
+
+	public void setsPreg12(String sPreg12) {
+		this.sPreg12 = sPreg12;
+	}
+
+	public String getsPreg13() {
+		return sPreg13;
+	}
+
+	public void setsPreg13(String sPreg13) {
+		this.sPreg13 = sPreg13;
 	}
 
 	@Override

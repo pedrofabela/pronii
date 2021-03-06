@@ -15,6 +15,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+/**
+ * @author gioca
+ *
+ */
 @Entity
 @Table(name = "TC_DOCENTES")
 public class TcDocentes implements Serializable{
@@ -59,6 +63,11 @@ public class TcDocentes implements Serializable{
 	private String nIdEscuelaRadi;
 	@Column(name = "S_NOMBREPREPRO")
 	private String sNombrePrePro;
+	@Column(name = "N_PERFIL")
+	private Integer nPerfil;
+	
+	
+	
 	@Transient
 	private Long nIdTieneLicencia;
 	@Transient
@@ -67,6 +76,9 @@ public class TcDocentes implements Serializable{
 	private Date sFechaInicioLicencia;
 	@Transient
 	private Date sFechaFinLicencia;
+	
+	@Transient
+	private Boolean bPerfil;
 	
 	
 	
@@ -200,9 +212,12 @@ public class TcDocentes implements Serializable{
 		this.sNombrePrePro = sNombrePrePro;
 	}
 	
-	
-	
-	
+	public Integer getnPerfil() {
+		return nPerfil;
+	}
+	public void setnPerfil(Integer nPerfil) {
+		this.nPerfil = nPerfil;
+	}
 	public Long getnIdTieneLicencia() {
 		return nIdTieneLicencia;
 	}
@@ -230,6 +245,13 @@ public class TcDocentes implements Serializable{
 	public void setsFechaFinLicencia(Date sFechaFinLicencia) {
 		this.sFechaFinLicencia = sFechaFinLicencia;
 	}
+	
+	public Boolean getbPerfil() {
+		return bPerfil;
+	}
+	public void setbPerfil(Boolean bPerfil) {
+		this.bPerfil = bPerfil;
+	}
 	@Override
 	public String toString() {
 		return "TcDocentes [nId=" + nId + ", sCurp=" + sCurp + ", sNombre=" + sNombre + ", sPrimerApellido="
@@ -237,10 +259,13 @@ public class TcDocentes implements Serializable{
 				+ ", sFechaNacimiento=" + sFechaNacimiento + ", sClaveSerPub=" + sClaveSerPub + ", sTelefono="
 				+ sTelefono + ", nEstatus=" + nEstatus + ", sCorreo=" + sCorreo + ", nIdPreProfe=" + nIdPreProfe
 				+ ", sFechaIngresoSubsistema=" + sFechaIngresoSubsistema + ", nIdEscuelaRadi=" + nIdEscuelaRadi
-				+ ", sNombrePrePro=" + sNombrePrePro + ", nIdTipoLicencia=" + nIdTipoLicencia
-				+ ", sFechaInicioLicencia=" + sFechaInicioLicencia + ", ssFechaFinLicencia=" + sFechaFinLicencia
-				+ ", tcGenero=" + tcGenero + ", tcPreProfe=" + tcPreProfe + ", tcEscuela=" + tcEscuela + "]";
+				+ ", sNombrePrePro=" + sNombrePrePro + ", nPerfil=" + nPerfil + ", nIdTieneLicencia=" + nIdTieneLicencia
+				+ ", nIdTipoLicencia=" + nIdTipoLicencia + ", sFechaInicioLicencia=" + sFechaInicioLicencia
+				+ ", sFechaFinLicencia=" + sFechaFinLicencia + ", bPerfil=" + bPerfil + ", tcGenero=" + tcGenero
+				+ ", tcPreProfe=" + tcPreProfe + ", tcEscuela=" + tcEscuela + "]";
 	}
+	
+	
 	
 	
 	

@@ -95,6 +95,10 @@ public class TwEscuelaDocentes implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "N_IDDOCENTE", referencedColumnName = "N_ID", updatable = false, insertable = false)
 	private TcDocentes tcDocentes;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "N_IDTIPOLICENCIA", referencedColumnName = "N_ID", updatable = false, insertable = false)
+	private TcTipoLicencia TcTipoLicencia;
 
 
 	public Long getnId() {
@@ -243,6 +247,14 @@ public class TwEscuelaDocentes implements Serializable{
 	}
 
 	
+
+	public TcTipoLicencia getTcTipoLicencia() {
+		return TcTipoLicencia;
+	}
+
+	public void setTcTipoLicencia(TcTipoLicencia tcTipoLicencia) {
+		TcTipoLicencia = tcTipoLicencia;
+	}
 
 	public Long getnTieneLicencia() {
 		return nTieneLicencia;

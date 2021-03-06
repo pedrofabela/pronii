@@ -44,6 +44,12 @@ public class TwNivelIdioma implements Serializable{
 	@Column(name = "D_FECHAVENCIMIENTO")
 	private Date dFechaVencimiento;
 	
+	@Column(name = "S_NOMBRECERTIFICACION")
+	private String sNombreCertificacion;
+	
+	@Column(name = "S_RESULTADOILCE")
+	private String sResultadoIlce;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "N_IDDOCENTE", referencedColumnName = "N_ID", updatable = false, insertable = false)
 	private TcDocentes tcDocentes;
@@ -104,6 +110,26 @@ public class TwNivelIdioma implements Serializable{
 
 	public void setdFechaVencimiento(Date dFechaVencimiento) {
 		this.dFechaVencimiento = dFechaVencimiento;
+	}
+	
+	
+
+	public String getsNombreCertificacion() {
+		return sNombreCertificacion;
+	}
+
+	public void setsNombreCertificacion(String sNombreCertificacion) {
+		this.sNombreCertificacion = sNombreCertificacion;
+	}
+	
+	
+
+	public String getsResultadoIlce() {
+		return sResultadoIlce;
+	}
+
+	public void setsResultadoIlce(String sResultadoIlce) {
+		this.sResultadoIlce = sResultadoIlce;
 	}
 
 	public TcDocentes getTcDocentes() {

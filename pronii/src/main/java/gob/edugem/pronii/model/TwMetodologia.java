@@ -50,6 +50,9 @@ public class TwMetodologia implements Serializable{
 	@Column(name = "D_FECHAVENCIMIENTO")
 	private Date dFechaVencimineto;
 	
+	@Column(name = "S_NOMBRECERTIFICACION")
+	private String sNombreCertificacion;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "N_IDDOCENTE", referencedColumnName = "N_ID", updatable = false, insertable = false)
 	private TcDocentes tcDocentes;
@@ -132,6 +135,16 @@ public class TwMetodologia implements Serializable{
 
 	public void setdFechaVencimineto(Date dFechaVencimineto) {
 		this.dFechaVencimineto = dFechaVencimineto;
+	}
+	
+	
+
+	public String getsNombreCertificacion() {
+		return sNombreCertificacion;
+	}
+
+	public void setsNombreCertificacion(String sNombreCertificacion) {
+		this.sNombreCertificacion = sNombreCertificacion;
 	}
 
 	public TcDocentes getTcDocentes() {

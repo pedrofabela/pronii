@@ -54,7 +54,7 @@
 										th:object="${tcDocentes}" id="FormDocente">
 
 										<input type="hidden" name="nId" th:field="*{nId}">
-
+										<input type="text"  th:field="*{nPerfil}">
 										<div class="row">
 											<div class="col-md-3">
 												<div class="form-group">
@@ -139,7 +139,7 @@
 											<div class="col-md-3">
 												<div class="form-group">
 													<label class="bmd-label-floating">*Fecha de Ingreso al subsistema</label>
-													 <input type="text" id="datePicker" th:field="*{sFechaIngresoSubsistema}" placeholder="*Fecha de Ingreso al subsistema" class="form-control datepicker" required="required">
+													 <input type="text" id="fechaIngresoSubsistema" th:field="*{sFechaIngresoSubsistema}" placeholder="*Fecha de Ingreso al subsistema" class="form-control" required="required">
 												</div>
 											</div>
 										</div>
@@ -289,6 +289,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>  
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
+	$(function () {
+        $("#fechaIngresoSubsistema").datepicker({dateFormat: 'dd-mm-yy'});
+      }
+    );
 	$(function () {
         $("#fechaInicioLicencia").datepicker({dateFormat: 'dd-mm-yy'});
       }

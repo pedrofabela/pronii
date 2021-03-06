@@ -172,13 +172,19 @@ public class EscuelaController {
 		twEscuelaDocentes.setnAlumnosTerceroM(0);
 		twEscuelaDocentes.setnEstatus(0);
 		twEscuelaDocentes.setnTieneLicencia(tcDocentes.getnIdTieneLicencia());
-		twEscuelaDocentes.setnIdTipoLicencia(tcDocentes.getnIdTipoLicencia());
+		
+		if (tcDocentes.getnIdTieneLicencia() == 2) {
+			twEscuelaDocentes.setnIdTipoLicencia(0L);
+		}else {
+			twEscuelaDocentes.setnIdTipoLicencia(tcDocentes.getnIdTipoLicencia());
+		}
 		twEscuelaDocentes.setdFechaInicioLicencia(tcDocentes.getsFechaInicioLicencia());
 		twEscuelaDocentes.setdFechaFinLicencia(tcDocentes.getsFechaFinLicencia());
 		
 
 		if (tcDocentes.getnId() == null) {
-
+			
+			tcDocentes.setnPerfil(0);
 			TcDocentes docenteGuardado = docenteEscuelaService.guardaDocente(tcDocentes);
 			
 			twEscuelaDocentes.setnIdDocente(docenteGuardado.getnId());
@@ -308,7 +314,7 @@ public class EscuelaController {
 				
 		escuelaService.guardaEscuela(tcEscuelaSave);
 		
-			attributes.addFlashAttribute("msgHoras", "Horas Actualizadas correctamente!");
+			attributes.addFlashAttribute("msgHoras", "Datos de la escuela guardados correctamente!");
 			return "redirect:/";			
 	}
 	

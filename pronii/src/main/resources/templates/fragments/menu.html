@@ -35,14 +35,14 @@
 						class="material-icons"> local_library </i> <span class="sidebar-normal">
 							Administración de escuelas </span>
 				</a></li>
+				<li class="nav-item " sec:authorize="hasAnyAuthority('ESCUELA')" ><a class="nav-link" th:href="@{/escuela/formEscuela}"> <i
+						class="material-icons"> auto_stories </i> <span class="sidebar-normal">
+							Datos de la Escuela </span>
+				</a></li>
 				<li class="nav-item " sec:authorize="hasAnyAuthority('ESCUELA')"><a class="nav-link" th:href="@{/escuela/consultaDocentes}"> <i
 						class="material-icons"> how_to_reg</i> <span class="sidebar-normal">
 							Administración de docentes </span>
-				</a></li>
-				<li class="nav-item " sec:authorize="hasAnyAuthority('ESCUELA')" ><a class="nav-link" th:href="@{/escuela/formEscuela}"> <i
-						class="material-icons"> auto_stories </i> <span class="sidebar-normal">
-							Registro de Horas Vacantes </span>
-				</a></li>
+				</a></li>			
 				<li class="nav-item " sec:authorize="hasAnyAuthority('ESCUELA')" ><a class="nav-link" th:href="@{/escuela/consultaMatriculaGeneral}"> <i
 						class="material-icons"> auto_stories </i> <span class="sidebar-normal">
 							Registro de Matrícula General </span>
@@ -52,15 +52,14 @@
 						class="sidebar-normal">  Actualizar contraseña </span>
 				</a></li>
 				<!--  -->
+				<li class="nav-item  " sec:authorize="hasAnyAuthority('DOCENTE')"><a class="nav-link" th:href="@{/docente/muestraForm}">
+						<i class="material-icons">school </i> <span
+						class="sidebar-normal">  Registro de Datos del Docente </span>
+				</a></li>
 				<li class="nav-item  " sec:authorize="hasAnyAuthority('DOCENTE')"><a class="nav-link" th:href="@{/docente/registraCertificaciones}">
 						<i class="material-icons">school </i> <span
 						class="sidebar-normal">  Registro de Certificaciones </span>
-				</a></li>
-				<li class="nav-item  " sec:authorize="hasAnyAuthority('DOCENTE')"><a class="nav-link" th:href="@{/docente/muestraForm}">
-						<i class="material-icons">school </i> <span
-						class="sidebar-normal">  Registro de cct de radicación </span>
-				</a></li>
-				
+				</a></li>			
 				<li class="nav-item  " sec:authorize="hasAnyAuthority('DOCENTE')"><a class="nav-link" th:href="@{/docente/formActualizaContra}">
 						<i class="material-icons">admin_panel_settings</i> <span
 						class="sidebar-normal">  Actualizar contraseña </span>

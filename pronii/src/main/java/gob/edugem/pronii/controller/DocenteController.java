@@ -66,7 +66,7 @@ public class DocenteController {
 	private PasswordEncoder passwordEncoder;
 
 	Long nIdDocente;
-
+	
 	@GetMapping("registraCertificaciones")
 	public String muestraRegistroCertificacion(Authentication auth, TwNivelIdioma twNivelIdioma, TwCenni twCenni,
 			TwMetodologia twMetodologia, Model model) {
@@ -99,6 +99,7 @@ public class DocenteController {
 		twNivelIdioma.setnIdDocente(nIdDocente);
 		System.out.println(twNivelIdioma);
 		certificacionesService.guardaCertificacionNivel(twNivelIdioma);
+		attributes.addFlashAttribute("msg", "certificación de NIVEL DE IDIOMA registrada correctamente!!");
 
 		return "redirect:/docente/registraCertificaciones";
 	}
@@ -109,6 +110,7 @@ public class DocenteController {
 		twCenni.setnIdDocente(nIdDocente);
 		System.out.println(twCenni);
 		certificacionesService.guardaCertificacionCenni(twCenni);
+		attributes.addFlashAttribute("msg", "certificación CENNI registrada correctamente!!");
 
 		return "redirect:/docente/registraCertificaciones";
 	}
@@ -119,7 +121,7 @@ public class DocenteController {
 		twMetodologia.setnIdDocente(nIdDocente);
 		System.out.println(twMetodologia);
 		certificacionesService.guardaCertificacionMetodologia(twMetodologia);
-
+		attributes.addFlashAttribute("msg", "certificación de Metodología en la enseñanza registrada correctamente!!");
 		return "redirect:/docente/registraCertificaciones";
 	}
 
@@ -127,6 +129,12 @@ public class DocenteController {
 	public String consultaCurp(Authentication auth, TcDocentes tcDocentes, Model model) {
 
 		tcDocentes = docenteService.consultaDocenteCurp(auth.getName());
+		System.out.println("tcDocentes: "+tcDocentes.toString());
+		if (tcDocentes.getnPerfil() == 0) {
+			tcDocentes.setbPerfil(false);
+		}else {
+			 tcDocentes.setbPerfil(true);
+		}	
 		model.addAttribute("listaEscuelas", docenteService.consultaEscuelaRelacionadas(tcDocentes.getnId()));
 		model.addAttribute("tcDocentes", tcDocentes);
 
@@ -135,7 +143,13 @@ public class DocenteController {
 
 	@PostMapping("guardaDocente")
 	public String guardarEscuela(TcDocentes tcDocentes, Model model, RedirectAttributes attributes) {
-
+		
+		System.out.println("tcDocentes: "+tcDocentes.toString());
+		if (tcDocentes.getbPerfil()) {
+			tcDocentes.setnPerfil(1);
+		}else {
+			 tcDocentes.setnPerfil(0);
+		}
 		docenteService.guardaDocente(tcDocentes);
 		attributes.addFlashAttribute("msgDocente", "Datos Actualizados");
 
