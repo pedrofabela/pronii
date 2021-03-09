@@ -3,78 +3,65 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
+	name='viewport' />
 
 <title>Index</title>
 <th:block th:include="fragments/cabecera :: cabecera"></th:block>
 </head>
 <body class="">
-  <div class="wrapper ">
-    
-    <div th:insert="fragments/menu :: menu-principal"></div>
-    
-    <div class="main-panel">
-      <!-- Navbar horizontal -->
-      <div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
-      <!-- End Navbar -->
-      <div class="content">
-        <div class="container-fluid">
-         <div class="col-md-12 text-center">
-         	<h1>Programa Nacional de Inglés (PRONI)</h1>
-         </div>
-         <div class="col-md-12 text-justify">
-         	
-						<p>El Programa Nacional de Inglés, se enfoca a la enseñanza y
-							aprendizaje de una lengua extranjera inglés, con lo cual potencia
-							el desarrollo personal y contribuye al desarrollo social, en un
-							marco de inclusión considerando la diversidad y
-							multiculturalidad.</p>
+	<div class="wrapper ">
 
-						<p>Que en el Estado de México exista una plataforma en línea,
-							que contenga información de las escuelas y los docentes de lengua
-							extranjera (inglés), que genere datos estadísticos actualizados
-							para su consulta en tiempo real, mismos permitan eficientar los
-							procesos administrativos en la toma de decisiones en acciones de
-							apoyo y fortalecimiento académico, que a su vez, tienen un
-							impacto en la enseñanza y el logro de los aprendizajes esperados
-							en los alumnos, en la adquisición de una Lengua Extranjera
-							Inglés.</p>
+		<div th:insert="fragments/menu :: menu-principal"></div>
 
-						<p>Mas allá de números, se contará con información referente a
-							la profesionalización de los docentes que se desempeñan en el
-							nivel de Secundaria en las modalidades generales y técnicas,
-							impartiendo la asignatura de lengua extranjera inglés en el
-							Subsistema Educativo Estatal, en la misma plataforma se tiene
-							contemplado: a) Integrar información referente a los resultados
-							de certificaciones aplicadas a los docentes beneficiados para
-							conocer el nivel de idioma en el que se encuentran los maestros
-							de acuerdo al Marco Común Europeo de Referencias para las lenguas
-							(MCER), b) Con base en las necesidades detectadas se programarán
-							cursos c) Transparentar la aplicación del recurso asignado por el
-							programa a la entidad.</p>
+		<div class="main-panel">
+			<!-- Navbar horizontal -->
+			<div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="col-md-12 text-center">
+						<h1>Programa Nacional de Inglés (PRONI)</h1>
+						<h2>Estado de México - Educación Secundaria</h2>
 
-						<p>Otra oportunidad que brinda la implementación de la
-							plataforma es la permanente actualización de información de los
-							docentes, con el apoyo de los directores y supervisores
-							escolares, así como de las Subdirecciones Regionales de Educación
-							Básica para la mejora y la calidad de la educación en el nivel de
-							secundaria.</p>
+					</div>
+					<div class="col-md-12 text-justify">
+
+						<p>
+							El PRONI tiene
+							como principal objetivo, contribuir a asegurar la calidad de los
+							aprendizajes en la educación básica mediante el fortalecimiento
+							de los procesos de enseñanza y aprendizaje de una lengua
+							extranjera (inglés), estableciendo condiciones técnicas y
+							pedagógicas.
+						</p>
+
+						<p>
+							Con el
+							propósito de facilitar la recopilación de datos requeridos para
+							la toma de decisiones y acciones en beneficio de los docentes que
+							imparten la asignatura Lengua Extranjera (Inglés), así como
+							actualizar y tener acceso a la información en tiempo real para su
+							consulta, la Dirección General de Educación Secundaria diseña la
+							plataforma PRONIEMS.
+						</p>
 
 
-
-
-
-						<div id="carouselExampleControls" class="carousel slide d-none d-md-block"
-							data-ride="carousel" style="width: 50%; margin: auto;" >
+						<div id="carouselExampleControls"
+							class="carousel slide d-none d-md-block" data-ride="carousel"
+							style="width: 50%; margin: auto;">
 							<div class="carousel-inner">
 								<div class="carousel-item active">
-									<img class="d-block w-100" th:src="@{/assets/img/new/proni1.jpeg}" alt="First slide">
+									<img class="d-block w-100"
+										th:src="@{/assets/img/new/proni1.jpeg}" alt="First slide">
 								</div>
 								<div class="carousel-item">
-									<img class="d-block w-100" th:src="@{/assets/img/new/proni2.jpeg}" alt="Second slide">
+									<img class="d-block w-100"
+										th:src="@{/assets/img/new/proni2.jpeg}" alt="Second slide">
 								</div>
 								<div class="carousel-item">
-									<img class="d-block w-100" th:src="@{/assets/img/new/proni3.jpeg}" alt="Third slide">
+									<img class="d-block w-100"
+										th:src="@{/assets/img/new/proni3.jpeg}" alt="Third slide">
 								</div>
 							</div>
 							<a class="carousel-control-prev" href="#carouselExampleControls"
@@ -87,8 +74,9 @@
 								class="sr-only">Next</span>
 							</a>
 						</div>
-
-						<div style="width: 100%; display: inline-block; margin-top: 30px; ">
+						<div class="row">
+						
+						<div class="col-md-6 mt-3 text-center" >
 							<a th:href="@{/assets/documentos/reglas.pdf}" target="_blank">
 								Reglas de Operación del Programa Nacional de Inglés para el
 								ejercicio fiscal 2021: <img th:src="@{/assets/img/descarga.png}"
@@ -97,41 +85,46 @@
 
 						</div>
 
-						<div style="width: 100%; display: inline-block;">
+						<div class="col-md-6 mt-3 text-center" >
 							<a th:href="@{/assets/documentos/triptico.pdf}" target="_blank">
 								Tríptico: <img th:src="@{/assets/img/descarga.png}"
 								style="width: 30px;"></img>
 							</a>
 
 						</div>
+						</div>
+
+						<div class="col-md-12 text-center">
+							<div th:if="${msgDocente != null}" class='alert alert-success'
+								th:text="${msgDocente}" role='alert'></div>
+						</div>
+						<div class="col-md-12 text-center">
+							<div th:if="${msgHoras != null}" class='alert alert-success'
+								th:text="${msgHoras}" role='alert'></div>
+						</div>
+						<div class="col-md-12 text-center">
+							<div th:if="${msgActualizaContra != null}"
+								class='alert alert-success' th:text="${msgActualizaContra}"
+								role='alert'></div>
+						</div>
+						<div class="col-md-12 text-center">
+							<div th:if="${msg != null}" class='alert alert-success'
+								th:text="${msg}" role='alert'></div>
+						</div>
 
 
-         	<div class="col-md-12 text-center">
-				<div th:if="${msgDocente != null}" class='alert alert-success' th:text="${msgDocente}" role='alert'></div>
-			</div>
-         	<div class="col-md-12 text-center">
-				<div th:if="${msgHoras != null}" class='alert alert-success' th:text="${msgHoras}" role='alert'></div>
-			</div>
-			<div class="col-md-12 text-center">
-				<div th:if="${msgActualizaContra != null}" class='alert alert-success' th:text="${msgActualizaContra}" role='alert'></div>
-			</div>
-			<div class="col-md-12 text-center">
-				<div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
-			</div>
-         
 
-         	
-         </div>
-        </div>
-      </div>
-      <footer>
-        <div th:insert="fragments/footer :: footer"></div>
-      </footer>
-    </div>
-  </div>
-  
-  <th:block th:include="fragments/scripts :: script"></th:block>
- 
+					</div>
+				</div>
+			</div>
+			<footer>
+				<div th:insert="fragments/footer :: footer"></div>
+			</footer>
+		</div>
+	</div>
+
+	<th:block th:include="fragments/scripts :: script"></th:block>
+
 </body>
 
 
