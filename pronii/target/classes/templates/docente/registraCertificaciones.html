@@ -29,11 +29,11 @@
 								<ul
 									class="nav nav-pills nav-pills-rose nav-pills-icons justify-content-center"
 									role="tablist">
-									<li class="nav-item"><a class="nav-link active" data-toggle="tab"
+									<li class="nav-item "><a class="nav-link active" data-toggle="tab"
 										href="#link7" role="tablist"> <i class="material-icons">signal_cellular_alt</i>
 											NIVEL DE IDIOMA
 									</a></li>
-									<li class="nav-item"><a class="nav-link" data-toggle="tab"
+									<li class="nav-item"><a class="nav-link " data-toggle="tab"
 										href="#link9" role="tablist"> <i class="material-icons">cast_for_education</i>
 											CENNI
 									</a></li>
@@ -53,35 +53,50 @@
 												<form th:action="@{/docente/guardaCerNivel}" method="post" th:object="${twNivelIdioma}">
 												<input type="hidden" th:field="*{nId}">
 												<div class="row">
-													<div class="col-md-4">
-                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" data-style="select-with-transition"  title="Tipo de certificación" data-size="7">
-                            
+													<div class="col-md-3">
+													<div class="form-group">
+														<label class="bmd-label-floating">*Tipo de Certificación</label>
+                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" id="selecTipoCerN" data-style="select-with-transition"  title="Tipo de certificación" data-size="7" onchange="seleccionado()" required="required">                        
                             								<option th:each="tipoCerNivel: ${listaCerNivel}" th:value="${tipoCerNivel.nId}" th:text="${tipoCerNivel.sNombre}"></option>
-                            							   
-                            								
-                            
+                            							                     
                           								</select>
+                          							 </div>                      							 
                         							</div>
-													<div class="col-md-4">
-														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7">
-                            
-                            								<option th:each="nivelIdioma: ${listaNivelIdioma}" th:value="${nivelIdioma.nId}" th:text="${nivelIdioma.sNombre}"></option>
-                            							    
+                        							<div class="col-md-3" id="otraCertificacion">
+                          								 <div class="form-group">
+                          								    <label class="bmd-label-floating">*Nombre de la certificación</label>                       								 
+                    										<input th:field="*{sNombreCertificacion}" type="text" class="form-control" id="nomCertificacionN"  required="required">
+                  										 </div>
+                        							</div>
+													<div class="col-md-3">
+													<div class="form-group">
+														<label class="bmd-label-floating">*Nivel de Idioma</label>
+													
+														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7" required="required">
+                            								<option th:each="nivelIdioma: ${listaNivelIdioma}" th:value="${nivelIdioma.nId}" th:text="${nivelIdioma.sNombre}"></option>          							    
                           								</select>
 													</div>
-													<div class="col-md-4">
+													</div>
+													<div class="col-md-3">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionNivel" placeholder="Fecha de emisión de certificado" readonly="readonly">
+                          								    <label class="bmd-label-floating">*Fecha de Emisión</label>                       								 
+                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionNivel" placeholder="Fecha de emisión de certificado" readonly="readonly" required="required">
+                  										 </div>
+                        							</div>
+													<div class="col-md-3">
+                          								 <div class="form-group">
+                          								 	<label class="bmd-label-floating">*Fecha de Vencimiento </label>
+                    										<input th:field="*{dFechaVencimiento}" type="text" class="form-control" id="fechaVencimientoNivel" placeholder="Fecha de vencimiento de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 												</div>
 												<div class="row">
-													<div class="col-md-4">
+													<div class="col-md-3">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaVencimiento}" type="text" class="form-control" id="fechaVencimientoNivel" placeholder="Fecha de vencimiento de certificado" readonly="readonly">
+                          								    <label class="bmd-label-floating">Diagnóstico ILCE 2020</label>                       								 
+                    										<input th:field="*{sResultadoIlce}" type="text" class="form-control"   readonly="readonly">
                   										 </div>
-                        							</div>
-													
+                        							</div>	
 												</div>																						
 												<button type="submit" class="btn btn-rose pull-right" th:text="*{nId} != null ? 'Actualizar' : 'Guardar'"></button>
 												<div class="clearfix"></div>
@@ -99,7 +114,7 @@
 												<input type="hidden" th:field="*{nId}">
 												<div class="row">
 													<div class="col-md-4">
-														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7">
+														<select th:field="*{nIdNivelIdioma}" class="selectpicker" data-style="select-with-transition"  title="NIvel de Idioma" data-size="7" required="required">
                             
                             								<option th:each="nivelCenni: ${listaNivelIdiomaCenni}" th:value="${nivelCenni.nId}" th:text="${nivelCenni.sNombre}"></option>
                             							    
@@ -107,12 +122,12 @@
 													</div>
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionCenni" placeholder="Fecha de emisión de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionCenni" placeholder="Fecha de emisión de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
                         							<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoCenni" placeholder="Fecha de vencimiento de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoCenni" placeholder="Fecha de vencimiento de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 												</div>																					
@@ -132,29 +147,35 @@
 												<input type="hidden" th:field="*{nId}">
 												<div class="row">
 													<div class="col-md-3">
-                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" data-style="select-with-transition"  title="Tipo de certificación" data-size="7">
+                          								<select th:field="*{nIdTipoCertificacion}" class="selectpicker" id="selecTipoCerM" data-style="select-with-transition"  title="Tipo de certificación" data-size="7" onchange="seleccionado2()" required="required">
                             
                             								<option th:each="tipoCerMet: ${listaCerMetodologia}" th:value="${tipoCerMet.nId}" th:text="${tipoCerMet.sNombre}"></option>
                             							   
                             							
                           								</select>
                         							</div>
+                        							<div class="col-md-3" id="otraCertificacionM">
+                          								 <div class="form-group">
+                          								    <label class="bmd-label-floating">*Nombre de la certificación</label>                       								 
+                    										<input th:field="*{sNombreCertificacion}" type="text" class="form-control" id="nomCertificacionM"  required="required">
+                  										 </div>
+                        							</div>
 													<div class="col-md-3">
-														<select th:field="*{nIdModulo1}" class="selectpicker" data-style="select-with-transition"  title="Módulo 1" data-size="7">
+														<select th:field="*{nIdModulo1}" class="selectpicker" data-style="select-with-transition"  title="Módulo 1" data-size="7" required="required">
                             
                             								<option th:each="modulo1: ${listaModulo}" th:value="${modulo1.nId}" th:text="${modulo1.sNombre}"></option>
                             							   
                           								</select>
 													</div>
 													<div class="col-md-3">
-														<select th:field="*{nIdModulo2}" class="selectpicker" data-style="select-with-transition"  title="Módulo 2" data-size="7">
+														<select th:field="*{nIdModulo2}" class="selectpicker" data-style="select-with-transition"  title="Módulo 2" data-size="7" required="required">
                             
                             								<option th:each="modulo2: ${listaModulo}" th:value="${modulo2.nId}" th:text="${modulo2.sNombre}"></option>
                             							   
                           								</select>
 													</div>
 													<div class="col-md-3">
-														<select th:field="*{nIdModulo3}" class="selectpicker" data-style="select-with-transition"  title="Módulo 3" data-size="7">
+														<select th:field="*{nIdModulo3}" class="selectpicker" data-style="select-with-transition"  title="Módulo 3" data-size="7" required="required">
                             
                             								<option th:each="modulo3: ${listaModulo}" th:value="${modulo3.nId}" th:text="${modulo3.sNombre}"></option>
                             							   
@@ -165,12 +186,12 @@
 												<div class="row">
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionMetodo" placeholder="Fecha de emisión de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaEmision}" type="text" class="form-control" id="fechaEmisionMetodo" placeholder="Fecha de emisión de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 													<div class="col-md-4">
                           								 <div class="form-group">
-                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoMetodo" placeholder="Fecha de vencimiento de certificado" readonly="readonly">
+                    										<input th:field="*{dFechaVencimineto}" type="text" class="form-control" id="fechaVencimientoMetodo" placeholder="Fecha de vencimiento de certificado" readonly="readonly" required="required">
                   										 </div>
                         							</div>
 													
@@ -184,11 +205,23 @@
 								</div>
 								
 							</div>
-						</div>
+							
+							<div class="row">
+					<div class="col-md-12 text-center">
+						<div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div>
 					</div>
+									
+					</div>
+							
+						</div>
+						
+					</div>
+					
 				</div>
 			</div>
-			<footer class="footer"> </footer>
+			<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 		</div>
 	</div>
 
@@ -221,6 +254,66 @@
       }
     );
 	</script>
+	
+	
+		<!-- Sript para mostrar u ocultar certificacion -->
+	<script>
+	var selectCertificacion = document.getElementById("selecTipoCerN");
+	var selected = selectCertificacion.options[selectCertificacion.selectedIndex].value;
+	//alert("valor de opcion licencia: "+selected)
+	if(selected==33){
+        $('#otraCertificacion').show();      
+    }else{	        	
+        $('#otraCertificacion').hide();
+        $("#nomCertificacionN").val('sin valor');
+        
+    }
+	
+	
+	function seleccionado(){
+	    var opt = $('#selecTipoCerN').val();
+	    
+	    if(opt==33){
+	    	 $('#otraCertificacion').show();      	       
+            $("#nomCertificacionN").val('');
+           
+	        
+	    }else{	        	
+	    	$('#otraCertificacion').hide();
+	        $("#nomCertificacionN").val('sin valor');
+	        }
+	    }
+	</script>
+	
+	<script>
+	var selectCertificacionM = document.getElementById("selecTipoCerM");
+	var selectedM = selectCertificacionM.options[selectCertificacionM.selectedIndex].value;
+	//alert("valor de opcion licencia: "+selected)
+	if(selectedM==40){
+        $('#otraCertificacionM').show();      
+    }else{	        	
+        $('#otraCertificacionM').hide();
+        $("#nomCertificacionM").val('sin valor');
+        
+    }
+	
+	
+	function seleccionado2(){
+	    var opt = $('#selecTipoCerM').val();
+	    
+	    if(opt==40){
+	    	 $('#otraCertificacionM').show();      	       
+            $("#nomCertificacionM").val('');
+           
+	        
+	    }else{	        	
+	    	$('#otraCertificacionM').hide();
+	        $("#nomCertificacionM").val('sin valor');
+	        }
+	    }
+	</script>
+	
+	
 </body>
 
 

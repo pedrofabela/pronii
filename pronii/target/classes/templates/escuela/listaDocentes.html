@@ -30,8 +30,8 @@
 									<h4 class="card-title">Administración de docentes</h4>
 								</div>
 								<div class="col-md-12 text-center">
-									<h2>Docentes registrados:</h2>
-									<label th:text="${Director}"></label>
+									<h2>Docentes registrados</h2>
+									<!-- <label th:text="${Director}"></label> -->
 								</div>
 								
 								<div class="card-body">
@@ -83,11 +83,16 @@
 													</td>
 													<td class="td-actions">
 														<a th:href="@{/escuela/consultaMatricula (id=${docente.nId})}" rel="tooltip"
-															class="btn btn-info btn-round">
+															class="btn btn-info btn-round" title="Agregar matricula">
 															<i class="material-icons">add</i>
-														</a>
+														</a>								
+														<button class="btn btn-warning btn-round"
+															th:onclick="'actualizar('+*{docente.nId}+')'" title="Restablecer Password">
+															<i class="material-icons">admin_panel_settings</i>
+															
+														</button>
 														<button class="btn btn-danger btn-round"
-															th:onclick="'eliminar('+*{docente.nId}+')'">
+															th:onclick="'eliminar('+*{docente.nId}+')'" title="Eliminar docente">
 															<i class="material-icons">delete</i>
 															
 														</button>
@@ -107,7 +112,9 @@
 				</div>
 
 
-				<footer class="footer"> </footer>
+				<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
 			</div>
 		</div>
 
@@ -119,7 +126,14 @@
 		    }
 			
 		    window.location.href = "/escuela/quitarDocente?id="+id+" ";		    
-		}				
+		}	
+		function actualizar(id) {
+		    if (!confirm('¿Está seguro que desea reestablecer la contraseña?')) {
+		        return;
+		    }
+			
+		    window.location.href = "/escuela/reestablecerPassword?id="+id+" ";		    
+		}	
 		</script>
 	</div>
 </body>
