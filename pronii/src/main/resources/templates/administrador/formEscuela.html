@@ -33,7 +33,12 @@
 								<div class="card-body">
 									<form th:action="@{/administrador/guardaEscuela}" method="post"
 										th:object="${tcEscuela}" id="FormEscuela">
-
+										
+										<div class="row col-md-12">
+													<div class="col-md-12">
+														<div class="card">
+														
+										<div class="card-body">
 										<input type="hidden" name="nId" th:field="*{nId}"> <input
 											type="hidden" name="nId" th:field="*{nIdDirector}">
 										<div class="row">
@@ -149,6 +154,11 @@
 
 												</select>
 											</div>
+										</div>
+										
+										</div>
+										</div>
+										</div>
 										</div>
 										<br>
 										<br>
@@ -312,6 +322,74 @@
 										<div class="clearfix"></div>
 									</form>
 								</div>
+								<div class="col-md-12 text-center" th:if="${nId != null} ">
+													<h2>Docentes Asignados a la escuela</h2>
+												</div>
+								<div class="row col-md-12" th:if="${nId != null} "> 
+								<div class="col-md-12">				
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+										<div class="col-md-4"></div>
+										<div class="col-md-4 text-center">
+											<div th:if="${msgDocente != null}" class='alert alert-success'
+												th:text="${msgDocente}" role='alert'></div>
+										</div>
+										<div class="col-md-4">
+											<label class="btn btn-rose pull-right"
+												th:text="'Total de Docentes: '+${listaDocentesEscuela.size()}"></label>
+										</div>
+									</div>
+									<div class="table-responsive">
+										<table class="table">
+											<thead style="background-color: purple; color: white;">
+												<tr class="text-center">
+													
+													<th>CURP </th>
+													<th>Nombre del docente</th>
+													<th>Clave de servidor público</th>
+													<th>Teléfono</th>
+													<th>Correo electrónico</th>
+													<th>Estatus</th>
+													<th>Acciones</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr class="text-center" th:each="docente: ${listaDocentesEscuela}">
+													
+													<td th:text="${docente.tcDocentes.sCurp}"></td>
+													<td th:text="${docente.tcDocentes.sNombre}+' '+ ${docente.tcDocentes.sPrimerApellido}+' '+${docente.tcDocentes.sSegundoApellido}"></td>
+													<td th:text="${docente.tcDocentes.sClaveSerPub}"></td>
+													<td th:text="${docente.tcDocentes.sTelefono} != null ? ${docente.tcDocentes.sTelefono} : 'Sin Información'"></td>
+													<td th:text="${docente.tcDocentes.sCorreo} != null ? ${docente.tcDocentes.sCorreo} : 'Sin Información'"></td>
+													<td th:switch="${docente.nEstatus}">
+													<button type="button" class="btn btn-success btn-link" th:case="1">
+													 	Matricula Registrada
+                                						<div class="ripple-container"></div>
+                              						</button>
+											        <button type="button" class="btn btn-danger btn-link" th:case="0">
+													 	Sin Matricula Registrada
+                                						<div class="ripple-container"></div>
+                              						</button>
+													</td>
+													<td class="td-actions">									
+														<button class="btn btn-warning btn-round"
+															th:onclick="'actualizar('+*{docente.nId}+')'" title="Restablecer Password">
+															<i class="material-icons">admin_panel_settings</i>														
+														</button>
+													</td>
+												</tr>
+												
+												
+
+											</tbody>
+										</table>
+									</div>
+										
+										</div>
+									</div>						
+								</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -328,18 +406,13 @@
 	<script th:src="@{/assets/js/core/jquery-1.12.4.js}"></script>
 	<script th:src="@{/assets/js/core/jquery-ui.js}"></script>
 	<script type="text/javascript">
-		$(function() {
-			$("#consultaDirector").autocomplete({
-				source : "directorAutocomplete",
-				minLength : 3,
-				select : function(event, ui) {
-					this.value = ui.item.label;
-					$("#IDDIRECTOR").val(ui.item.value);
-					return false;
-				}
-			});
-
-		});
+	function actualizar(id) {
+	    if (!confirm('¿Está seguro que desea reestablecer la contraseña?')) {
+	        return;
+	    }
+		
+	    window.location.href = "/administrador/reestablecerPasswordDocente?id="+id+" ";		    
+	}	
 	</script>
 
 

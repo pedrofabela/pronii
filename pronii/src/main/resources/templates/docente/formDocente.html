@@ -41,7 +41,7 @@
 											<div class="row">
 												<div class="col-md-3">
 													<div class="form-group">
-														<label class="bmd-label-floating">Curp</label> <input
+														<label class="bmd-label-floating">CURP</label> <input
 															type="text" class="form-control" th:name="curp"
 															th:field="*{sCurp}" readonly="readonly">
 													</div>
@@ -90,7 +90,7 @@
 												</div>
 												<div class="col-md-3">
 													<div class="form-group">
-														<label class="bmd-label-floating">*clave de
+														<label class="bmd-label-floating">*Clave de
 															servidor público</label> <input type="text" class="form-control"
 															th:field="*{sClaveSerPub}" minlength="9" maxlength="9"
 															required="required">
@@ -158,8 +158,8 @@
 													<label class="form-check-label"> <input
 														class="form-check-input" type="checkbox"
 														th:field="*{bPerfil}"> Cuenta con alguna
-														licenciatura, maestria o doctorado que cumpla con el
-														perfil de Ingles? <span class="form-check-sign"> <span
+														licenciatura, maestría o doctorado que cumpla con el
+														perfil de Inglés? <span class="form-check-sign"> <span
 															class="check"></span>
 													</span>
 													</label>
@@ -175,9 +175,9 @@
 														<thead style="background-color: purple; color: white;">
 															<tr class="text-center">
 
-																<th>Cct</th>
+																<th>CCT</th>
 																<th>Nombre de la escuela</th>
-																<th>licencia De trabajo</th>
+																<th>Licencia de trabajo</th>
 																<th>Tipo de licencia</th>
 																<th>Fecha Inicio de licencia</th>
 																<th>Fecha Fin Licencia</th>
@@ -241,7 +241,7 @@
 								document.querySelector('#gradoE').innerText = '*nombre de licenciatura';
 
 							} else if (selected == 2) {
-								document.querySelector('#gradoE').innerText = '*nombre de la maestria';
+								document.querySelector('#gradoE').innerText = '*nombre de la maestría';
 							} else if (selected == 3) {
 								document.querySelector('#gradoE').innerText = '*nombre del doctorado';
 							} else if (selected == 4) {
@@ -262,7 +262,7 @@
 													$("#gradoEI").val('');
 												} else if (select == 2) {
 													document
-															.querySelector('#gradoE').innerText = 'nombre de la maestria';
+															.querySelector('#gradoE').innerText = 'nombre de la maestría';
 													$("#gradoEI").val('');
 												} else if (select == 3) {
 													document

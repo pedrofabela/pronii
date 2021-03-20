@@ -116,5 +116,11 @@ public class DocenteEscuelaServiceImpl extends WsConsultaCurpServiceImpl impleme
 		
 	}
 
+	@Override
+	public TwEscuelaDocentes consultaRelacionDocenteEscuelaObject(Long idEscuela, Long idDocente) {
+		
+		return docenteEscuelaRepository.findBynIdEscuelaAndnIdDocenteObject(idEscuela, idDocente);
+	}
+
 	
 }

@@ -43,6 +43,10 @@
 													Curp</button>
 											</div>
 										</div>
+										<div class="col-md-12 text-center">
+											<div th:if="${msgError != null}" class='alert alert-danger'
+												th:text="${msgError}" role='alert'></div>
+										</div>
 
 										<hr>
 									</form>

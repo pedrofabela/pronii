@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import gob.edugem.pronii.model.Perfil;
+import gob.edugem.pronii.model.TcDirectores;
 import gob.edugem.pronii.model.TcDocentes;
 import gob.edugem.pronii.model.TcEscuela;
 import gob.edugem.pronii.model.TwEscuelaDocentes;
@@ -88,9 +89,9 @@ public class EscuelaController {
 	
 
 	@GetMapping("consultaDocentes")
-	public String muestraDocentes(Authentication auth, Model model) {
+	public String muestraDocentes(Model model, HttpSession session) {
 
-		String username = auth.getName();
+		String username = (String) session.getAttribute("username");
 		System.out.println("Nombre del usuario: " + username);
 		TcEscuela tcEscuela = escuelaService.obtenerEscuelaCct(username);
 		nIdEscuela = tcEscuela.getnId();
@@ -122,8 +123,14 @@ public class EscuelaController {
 
 		if (tcDocentes == null) {
 			tcDocentes = docenteEscuelaService.consultaCurpDocenteRenapo(curp);
+			
+			if (tcDocentes == null) {
+				model.addAttribute("msgError", "la curp que intenta agregar no existe en renapo");
+				model.addAttribute("nId", nId);
+				model.addAttribute("tcDocentes", tcDocentes);
+			}
+			
 			nId = null;
-			System.out.println("consulta renapo: " + tcDocentes.toString());
 
 		} else if (tcDocentes.getsFechaNacimiento() == null) {
 			TcDocentes tcDocentesRenapo = new TcDocentes();
@@ -133,31 +140,44 @@ public class EscuelaController {
 			System.out.println("consulta renapo: " + tcDocentes.toString());
 		}
 		
-        List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(nIdEscuela, tcDocentes.getnId());
-		
-		if (listaRelacion.size() > 0) {
-			for (TwEscuelaDocentes twEscuelaDocentes : listaRelacion) {
-				tcDocentes.setnIdTieneLicencia(twEscuelaDocentes.getnTieneLicencia());
-				tcDocentes.setnIdTipoLicencia(twEscuelaDocentes.getnIdTipoLicencia());
-				tcDocentes.setsFechaInicioLicencia(twEscuelaDocentes.getdFechaInicioLicencia());
-				tcDocentes.setsFechaFinLicencia(twEscuelaDocentes.getdFechaFinLicencia());
+		if (tcDocentes != null) {
+			
+			List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(nIdEscuela, tcDocentes.getnId());
+			
+			if (listaRelacion.size() > 0) {
+				for (TwEscuelaDocentes twEscuelaDocentes : listaRelacion) {
+					tcDocentes.setnIdTieneLicencia(twEscuelaDocentes.getnTieneLicencia());
+					tcDocentes.setnIdTipoLicencia(twEscuelaDocentes.getnIdTipoLicencia());
+					tcDocentes.setsFechaInicioLicencia(twEscuelaDocentes.getdFechaInicioLicencia());
+					tcDocentes.setsFechaFinLicencia(twEscuelaDocentes.getdFechaFinLicencia());
+				}
+			}else {
+				tcDocentes.setnIdTieneLicencia(2L);
 			}
-		}else {
-			tcDocentes.setnIdTieneLicencia(2L);
+			
+			model.addAttribute("nId", nId);
+			model.addAttribute("tcDocentes", tcDocentes);
+			
+			
+			
 		}
-
-		model.addAttribute("nId", nId);
-		model.addAttribute("tcDocentes", tcDocentes);
-
+			
 		return "escuela/formDocente";
 	}
 
 	@PostMapping("guardaDocente")
-	public String guardarEscuela(TcDocentes tcDocentes, Model model, RedirectAttributes attributes) {
+	public String guardarEscuela(TcDocentes tcDocentes, Model model, HttpSession session, RedirectAttributes attributes) {
 
 		TwEscuelaDocentes twEscuelaDocentes = new TwEscuelaDocentes();
-		System.err.println("nIdEscuela controller: "+nIdEscuela);
-		twEscuelaDocentes.setnIdEscuela(nIdEscuela);
+		
+		String username = (String) session.getAttribute("username");
+		System.out.println("Nombre del usuario en registro **************************************************************: " + username);
+		TcEscuela tcEscuela = escuelaService.obtenerEscuelaCct(username);
+		
+		System.out.println("idEscuela en registro **************************************************************: " + tcEscuela.getnId());
+		
+		
+		twEscuelaDocentes.setnIdEscuela(tcEscuela.getnId());
 		twEscuelaDocentes.setnGrupoPrimero(0);
 		twEscuelaDocentes.setnGrupoSegundo(0);
 		twEscuelaDocentes.setnGrupoTercero(0);
@@ -221,6 +241,26 @@ public class EscuelaController {
 				docenteEscuelaService.guardaDocente(tcDocentes);
 				twEscuelaDocentes.setnIdDocente(tcDocentes.getnId());
 				docenteEscuelaService.guardaDocenteEscuela(twEscuelaDocentes);
+				
+				
+				Usuario userRecuperado = usuarioService.obterUsuarioUsername(tcDocentes.getsCurp());
+				
+				if (userRecuperado == null) {
+					Usuario user = new Usuario();
+					user.setNombre(tcDocentes.getsNombre()+' '+tcDocentes.getsPrimerApellido()+' '+ tcDocentes.getsSegundoApellido());
+					user.setEmail(tcDocentes.getsCorreo());
+					user.setUsername(tcDocentes.getsCurp());
+					user.setPassword(passwordEncoder.encode(tcDocentes.getsClaveSerPub()));
+					user.setEstatus(1);	
+					
+					Perfil perfil = new Perfil();			
+					perfil.setnId(3L);			
+					user.agregar(perfil);	
+					
+					usuarioService.guardaUsuario(user);		
+				}
+				
+				
 				attributes.addFlashAttribute("msg", "Docente agregado a la escuela correctamente");
 			}
 		}
@@ -282,8 +322,18 @@ public class EscuelaController {
 	@PostMapping("guardaMatriculaGeneral")
 	public String registraMatriculaGeneral(TcEscuela tcEscuela, RedirectAttributes attributes ) {
 		
+		TcEscuela tcEscuelaConsultada = escuelaService.obtenerEscuelaId(tcEscuela.getnId());
+		tcEscuelaConsultada.setnGrupoPrimero(tcEscuela.getnGrupoPrimero());
+		tcEscuelaConsultada.setnGrupoSegundo(tcEscuela.getnGrupoSegundo());
+		tcEscuelaConsultada.setnGrupoTercero(tcEscuela.getnGrupoTercero());
+		tcEscuelaConsultada.setnAlumnosPrimeroH(tcEscuela.getnAlumnosPrimeroH());
+		tcEscuelaConsultada.setnAlumnosPrimeroM(tcEscuela.getnAlumnosPrimeroM());
+		tcEscuelaConsultada.setnAlumnosSegundoH(tcEscuela.getnAlumnosSegundoH());
+		tcEscuelaConsultada.setnAlumnosSegundoM(tcEscuela.getnAlumnosSegundoM());
+		tcEscuelaConsultada.setnAlumnosTerceroH(tcEscuela.getnAlumnosTerceroH());
+		tcEscuelaConsultada.setnAlumnosTerceroM(tcEscuela.getnAlumnosTerceroM());
 		
-		escuelaService.guardaEscuela(tcEscuela);
+		escuelaService.guardaEscuela(tcEscuelaConsultada);
 		attributes.addFlashAttribute("nIdEscuela", nIdEscuela);
 		attributes.addFlashAttribute("msg", "Matrícula registrada correctamente!");
 		return "redirect:/";
@@ -291,13 +341,22 @@ public class EscuelaController {
 	}
 
 	@GetMapping("formEscuela")
-	public String formEscuela(Authentication auth ,Model model, TcEscuela tcEscuela) {	
-		tcEscuela = escuelaService.obtenerEscuelaCct(auth.getName());
-		if (tcEscuela.getnIdDirector() != null) {
-			String sNombreDirector= directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector()).getsNombre();
+	public String formEscuela(Model model, TcEscuela tcEscuela, HttpSession session) {	
+		
+		tcEscuela = escuelaService.obtenerEscuelaCct((String)session.getAttribute("username"));
+		if (tcEscuela.getnIdDirector() != null) { 
+			TcDirectores tcDirectores = null;
+			tcDirectores = directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector());
+			String sNombreDirector= tcDirectores.getsNombre() + ' '+ tcDirectores.getsApellidoPaterno() + ' '+tcDirectores.getsApellidoMaterno();
+			String sTelefono = tcDirectores.getsTelefono() != null ? tcDirectores.getsTelefono() : "No tiene teléfono registrado";
+			String sCorreo = tcDirectores.getsCorrePersonal() != null ? tcDirectores.getsCorrePersonal(): "No tiene Correo electrónico registrado";
 			model.addAttribute("sNombreDirector", sNombreDirector);
+			model.addAttribute("sTelefono", sTelefono);
+			model.addAttribute("sCorreo", sCorreo);
 		}else {
 			model.addAttribute("sNombreDirector", "No hay Director Asignado a esta escuela");
+			model.addAttribute("sTelefono", "No tiene teléfono registrado");
+			model.addAttribute("sCorreo", "No tiene Correo electrónico registrado");
 		}
 		
 		model.addAttribute("nId", "actualizacion");
@@ -358,16 +417,89 @@ public class EscuelaController {
 		
 		Usuario usuarioConsultado= usuarioService.obterUsuarioUsername(twEscuelaDocentes.getTcDocentes().getsCurp());
 		
-		usuarioConsultado.setPassword(passwordEncoder.encode(twEscuelaDocentes.getTcDocentes().getsClaveSerPub()));
+		if (usuarioConsultado == null) {
+			Usuario user = new Usuario();
+			user.setNombre(twEscuelaDocentes.getTcDocentes().getsNombre()+' '+twEscuelaDocentes.getTcDocentes().getsPrimerApellido()+' '+ twEscuelaDocentes.getTcDocentes().getsSegundoApellido());
+			user.setEmail(twEscuelaDocentes.getTcDocentes().getsCorreo());
+			user.setUsername(twEscuelaDocentes.getTcDocentes().getsCurp());
+			user.setPassword(passwordEncoder.encode(twEscuelaDocentes.getTcDocentes().getsClaveSerPub()));
+			user.setEstatus(1);	
+			
+			Perfil perfil = new Perfil();			
+			perfil.setnId(3L);			
+			user.agregar(perfil);	
+			
+			usuarioService.guardaUsuario(user);
+		}else {
+			usuarioConsultado.setPassword(passwordEncoder.encode(twEscuelaDocentes.getTcDocentes().getsClaveSerPub()));
+			
+			usuarioService.guardaUsuario(usuarioConsultado);
+			
+		}
 		
-		usuarioService.guardaUsuario(usuarioConsultado);
+		
 		
 		attributes.addFlashAttribute("msg", "Contraseña reestablecida correctamente");
 		return "redirect:/escuela/consultaDocentes";
 	}
 	
+	@GetMapping("/consultaDocente")
+	public String consultaDocente(@RequestParam(required = true) Long id, TcDocentes tcDocentes, Model model) {
+		
+		System.err.println("nIdEscuela controller: "+nIdEscuela);
+		tcDocentes = docenteEscuelaService.consultaDocenteId(id);
+		
+		System.out.println("valor de id recibido: "+id);
+		
+		List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(nIdEscuela, tcDocentes.getnId());
+		
+		if (listaRelacion.size() > 0) {
+			for (TwEscuelaDocentes twEscuelaDocentes : listaRelacion) {
+				tcDocentes.setnIdTieneLicencia(twEscuelaDocentes.getnTieneLicencia());
+				tcDocentes.setnIdTipoLicencia(twEscuelaDocentes.getnIdTipoLicencia());
+				tcDocentes.setsFechaInicioLicencia(twEscuelaDocentes.getdFechaInicioLicencia());
+				tcDocentes.setsFechaFinLicencia(twEscuelaDocentes.getdFechaFinLicencia());
+			}
+		}else {
+			tcDocentes.setnIdTieneLicencia(2L);
+		}
+		
+		model.addAttribute("tcDocentes", tcDocentes);
+		
+		return "escuela/actualizarDocente";
+	}
 	
-	
+	@PostMapping("/actualizarDocente")
+	public String actualizarDocente(TcDocentes tcDocentes, Model model, RedirectAttributes attributes) {
+		
+		TcDocentes docenteConsultado = docenteEscuelaService.consultaDocenteId(tcDocentes.getnId());
+		
+		docenteConsultado.setnIdSexo(tcDocentes.getnIdSexo());
+		docenteConsultado.setsClaveSerPub(tcDocentes.getsClaveSerPub());
+		docenteConsultado.setsTelefono(tcDocentes.getsTelefono());
+		docenteConsultado.setnIdPreProfe(tcDocentes.getnIdPreProfe());
+		docenteConsultado.setsNombrePrePro(tcDocentes.getsNombrePrePro());
+		docenteConsultado.setsCorreo(tcDocentes.getsCorreo());
+		docenteConsultado.setsFechaIngresoSubsistema(tcDocentes.getsFechaIngresoSubsistema());
+		
+		TwEscuelaDocentes relDocEsc = docenteEscuelaService.consultaRelacionDocenteEscuelaObject(nIdEscuela, tcDocentes.getnId());
+		
+		relDocEsc.setnTieneLicencia(tcDocentes.getnIdTieneLicencia());
+		relDocEsc.setnIdTipoLicencia(tcDocentes.getnIdTipoLicencia());
+		relDocEsc.setdFechaInicioLicencia(tcDocentes.getsFechaInicioLicencia());
+		relDocEsc.setdFechaFinLicencia(tcDocentes.getsFechaFinLicencia());
+		
+		docenteEscuelaService.guardaDocente(docenteConsultado);
+		
+		docenteEscuelaService.guardaDocenteEscuela(relDocEsc);
+		
+		attributes.addFlashAttribute("msg", "Docente actualizado correctamente!!");
+		
+		
+		return "redirect:/escuela/consultaDocentes";
+		
+		
+	}
 	
 	@ModelAttribute
 	public void setGenericos(Model model) {

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -65,18 +64,18 @@ public class DocenteController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-	Long nIdDocente;
+	
 	
 	@GetMapping("registraCertificaciones")
-	public String muestraRegistroCertificacion(Authentication auth, TwNivelIdioma twNivelIdioma, TwCenni twCenni,
-			TwMetodologia twMetodologia, Model model) {
+	public String muestraRegistroCertificacion(TwNivelIdioma twNivelIdioma, TwCenni twCenni,
+			TwMetodologia twMetodologia, Model model, HttpSession session) {
 
-		TcDocentes tcDocente = docenteService.consultaDocenteCurp(auth.getName());
-		nIdDocente = tcDocente.getnId();
+		TcDocentes tcDocente = docenteService.consultaDocenteCurp((String) session.getAttribute("username"));
+		
 
-		twNivelIdioma = certificacionesService.consultaCertificacionNivel(nIdDocente);
-		twCenni = certificacionesService.consultaCertificacionCenni(nIdDocente);
-		twMetodologia = certificacionesService.consultaCertificacionMetodologia(nIdDocente);
+		twNivelIdioma = certificacionesService.consultaCertificacionNivel(tcDocente.getnId());
+		twCenni = certificacionesService.consultaCertificacionCenni(tcDocente.getnId());
+		twMetodologia = certificacionesService.consultaCertificacionMetodologia(tcDocente.getnId());
 
 		if (twNivelIdioma != null) {
 			model.addAttribute("twNivelIdioma", twNivelIdioma);
@@ -88,47 +87,102 @@ public class DocenteController {
 			model.addAttribute("twMetodologia", twMetodologia);
 		}
 
-		System.err.println("nIdDocente: " + nIdDocente);
+		System.err.println("nIdDocente: " + tcDocente.getnId());
 
 		return "docente/registraCertificaciones";
 	}
 
 	@PostMapping("guardaCerNivel")
-	public String guardaCerNivel(TwNivelIdioma twNivelIdioma, RedirectAttributes attributes) {
+	public String guardaCerNivel(TwNivelIdioma twNivelIdioma, RedirectAttributes attributes, HttpSession session) {
+		
+		TcDocentes tcDocentes =docenteService.consultaDocenteCurp((String) session.getAttribute("username"));
 
-		twNivelIdioma.setnIdDocente(nIdDocente);
+		twNivelIdioma.setnIdDocente(tcDocentes.getnId());
 		System.out.println(twNivelIdioma);
-		certificacionesService.guardaCertificacionNivel(twNivelIdioma);
+		
+		if (twNivelIdioma.getnId() != null) {
+			System.out.println("entro actializar cer nivel");
+			TwNivelIdioma twNivelIdiomaConsultado = certificacionesService.consultaCertificacionNivelId(twNivelIdioma.getnId());
+			twNivelIdiomaConsultado.setnIdDocente(twNivelIdioma.getnIdDocente());
+			twNivelIdiomaConsultado.setnIdTipoCertificacion(twNivelIdioma.getnIdTipoCertificacion());
+			twNivelIdiomaConsultado.setnIdNivelIdioma(twNivelIdioma.getnIdNivelIdioma());
+			twNivelIdiomaConsultado.setdFechaEmision(twNivelIdioma.getdFechaEmision());
+			twNivelIdiomaConsultado.setdFechaVencimiento(twNivelIdioma.getdFechaVencimiento());
+			twNivelIdiomaConsultado.setsNombreCertificacion(twNivelIdioma.getsNombreCertificacion());
+			
+			certificacionesService.guardaCertificacionNivel(twNivelIdiomaConsultado);
+			
+			
+		}else {
+			certificacionesService.guardaCertificacionNivel(twNivelIdioma);
+		}
+		
+		
 		attributes.addFlashAttribute("msg", "certificación de NIVEL DE IDIOMA registrada correctamente!!");
 
 		return "redirect:/docente/registraCertificaciones";
 	}
 
 	@PostMapping("guardaCerCenni")
-	public String guardaCerCenni(TwCenni twCenni, RedirectAttributes attributes) {
-
-		twCenni.setnIdDocente(nIdDocente);
+	public String guardaCerCenni(TwCenni twCenni, RedirectAttributes attributes, HttpSession session) {
+		TcDocentes tcDocentes =docenteService.consultaDocenteCurp((String) session.getAttribute("username"));
+		twCenni.setnIdDocente(tcDocentes.getnId());
 		System.out.println(twCenni);
-		certificacionesService.guardaCertificacionCenni(twCenni);
+		
+		if (twCenni.getnId() != null) {
+			System.out.println("entro actializar cer meto");
+			TwCenni twCenniConsultado = certificacionesService.consultaCertificacionCenniId(twCenni.getnId());
+			
+			twCenniConsultado.setnIdDocente(twCenni.getnIdDocente());
+			twCenniConsultado.setnIdNivelIdioma(twCenni.getnIdNivelIdioma());
+			twCenniConsultado.setdFechaEmision(twCenni.getdFechaEmision());
+			twCenniConsultado.setdFechaVencimineto(twCenni.getdFechaVencimineto());
+			
+			certificacionesService.guardaCertificacionCenni(twCenniConsultado);
+		}
+		else {
+			certificacionesService.guardaCertificacionCenni(twCenni);
+		}
+		
 		attributes.addFlashAttribute("msg", "certificación CENNI registrada correctamente!!");
 
 		return "redirect:/docente/registraCertificaciones";
 	}
 
 	@PostMapping("guardaCerMetodo")
-	public String guardaCerCenni(TwMetodologia twMetodologia, RedirectAttributes attributes) {
-
-		twMetodologia.setnIdDocente(nIdDocente);
+	public String guardaCerCenni(TwMetodologia twMetodologia, RedirectAttributes attributes, HttpSession session) {
+		
+		TcDocentes tcDocentes =docenteService.consultaDocenteCurp((String) session.getAttribute("username"));
+		
+		twMetodologia.setnIdDocente(tcDocentes.getnId());
+		
 		System.out.println(twMetodologia);
-		certificacionesService.guardaCertificacionMetodologia(twMetodologia);
+		if (twMetodologia.getnId() != null) {
+			System.out.println("entro actializar cer nivel");
+			TwMetodologia metodologia = certificacionesService.consultaCertificacionMetodologiaId(twMetodologia.getnId());
+			
+			metodologia.setnIdDocente(twMetodologia.getnIdDocente());
+			metodologia.setnIdTipoCertificacion(twMetodologia.getnIdTipoCertificacion());
+			metodologia.setnIdModulo1(twMetodologia.getnIdModulo1());
+			metodologia.setnIdModulo2(twMetodologia.getnIdModulo2());
+			metodologia.setnIdModulo3(twMetodologia.getnIdModulo3());
+			metodologia.setdFechaEmision(twMetodologia.getdFechaEmision());
+			metodologia.setdFechaVencimineto(twMetodologia.getdFechaVencimineto());
+			
+			certificacionesService.guardaCertificacionMetodologia(metodologia);
+		}else {
+			certificacionesService.guardaCertificacionMetodologia(twMetodologia);
+		}
+		
+		
 		attributes.addFlashAttribute("msg", "certificación de Metodología en la enseñanza registrada correctamente!!");
 		return "redirect:/docente/registraCertificaciones";
 	}
 
 	@GetMapping("muestraForm")
-	public String consultaCurp(Authentication auth, TcDocentes tcDocentes, Model model) {
+	public String consultaCurp(TcDocentes tcDocentes, Model model, HttpSession session) {
 
-		tcDocentes = docenteService.consultaDocenteCurp(auth.getName());
+		tcDocentes = docenteService.consultaDocenteCurp((String) session.getAttribute("username"));
 		System.out.println("tcDocentes: "+tcDocentes.toString());
 		if (tcDocentes.getnPerfil() == 0) {
 			tcDocentes.setbPerfil(false);
@@ -199,7 +253,7 @@ public class DocenteController {
 		model.addAttribute("listaModulo", modulosService.obtenerModulos());
 		model.addAttribute("listaGenero", sexoService.obtenerGenero());
 		model.addAttribute("listaPreProfe", preProfeService.obtenerPreProfe());
-		model.addAttribute("nIdDocente", nIdDocente);
+		
 	}
 
 	@InitBinder

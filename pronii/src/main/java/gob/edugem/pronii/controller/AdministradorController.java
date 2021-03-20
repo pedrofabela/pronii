@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import gob.edugem.pronii.model.Perfil;
 import gob.edugem.pronii.model.TcDirectores;
 import gob.edugem.pronii.model.TcEscuela;
 import gob.edugem.pronii.model.TcRegional;
+import gob.edugem.pronii.model.TwEscuelaDocentes;
 import gob.edugem.pronii.model.Usuario;
 import gob.edugem.pronii.service.DirectoresService;
 import gob.edugem.pronii.service.DocenteEscuelaService;
@@ -97,9 +99,29 @@ public class AdministradorController {
 		
 		//sNombreDirector= tcEscuela.getTcDirectores().getsNombre();
 		nId=null;
+		String valorRecibido;
 		
-		String valorRecibido=escuelaService.guardaEscuela(tcEscuela);
-		
+		if (tcEscuela.getnId() != null) {
+			TcEscuela tcEscuelaConsultada= escuelaService.obtenerEscuelaId(tcEscuela.getnId());
+			
+			tcEscuelaConsultada.setsCct(tcEscuela.getsCct());
+			tcEscuelaConsultada.setsNombre(tcEscuela.getsNombre());
+			tcEscuelaConsultada.setnIdTurno(tcEscuela.getnIdTurno());
+			tcEscuelaConsultada.setnIdZonaEscolar(tcEscuela.getnIdZonaEscolar());
+			tcEscuelaConsultada.setsDomicilio(tcEscuela.getsDomicilio());
+			tcEscuelaConsultada.setsColonia(tcEscuela.getsColonia());
+			tcEscuelaConsultada.setsLocalidad(tcEscuela.getsLocalidad());
+			tcEscuelaConsultada.setnIdMunicipio(tcEscuela.getnIdMunicipio());
+			tcEscuelaConsultada.setsTelefono(tcEscuela.getsTelefono());
+			tcEscuelaConsultada.setsCorreo(tcEscuela.getsCorreo());
+			tcEscuelaConsultada.setnIdModalidad(tcEscuela.getnIdModalidad());
+			tcEscuelaConsultada.setnIdRegional(tcEscuela.getnIdRegional());
+			
+			valorRecibido=escuelaService.guardaEscuela(tcEscuela);
+		}else {
+			valorRecibido=escuelaService.guardaEscuela(tcEscuela);
+		}
+			
 		if (valorRecibido.equals(Constantes.guardar) || valorRecibido.equals(Constantes.actualizar)) {		
 			tcRegional.setnId(nIdRegion);
 			System.out.println("tcRegional id: "+tcRegional.getnId());
@@ -109,7 +131,12 @@ public class AdministradorController {
 			attributes.addFlashAttribute("msg", msg);
 			return "redirect:/administrador/consultaEscuelaRegion";
 		}else {
-			sNombreDirector= directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector()).getsNombre();
+			if (tcEscuela.getnIdDirector() != null ) {
+				sNombreDirector= directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector()).getsNombre();
+			}else {
+				sNombreDirector= "sin director asignado";
+			}
+			
 			model.addAttribute("sNombreDirector", sNombreDirector);
 			model.addAttribute("msg", "la CCT que intenta registrar ya existe en la base de datos");
 			return "administrador/formEscuela";
@@ -122,7 +149,18 @@ public class AdministradorController {
 	@GetMapping("editarEscuela")
 	public String editarEscuela(@RequestParam(required = false) Long id, Model model) {		
 		TcEscuela tcEscuela= escuelaService.obtenerEscuelaId(id);
-		sNombreDirector= directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector()).getsNombre();
+		TcDirectores tcDirectores=null;
+		if (tcEscuela.getnIdDirector() != null) {
+			tcDirectores = directoresService.consultaDirectorPorId(tcEscuela.getnIdDirector());
+			sNombreDirector= tcDirectores.getsNombre()+' '+tcDirectores.getsApellidoPaterno()+' '+tcDirectores.getsApellidoMaterno();
+		}else {
+			sNombreDirector= "No hay Director Asignado a esta escuela.";
+		}
+		
+		List<TwEscuelaDocentes> listaDoncentesEscuela = docenteEscuelaService.obtenerDocentesEscuela(tcEscuela.getnId());
+		System.out.println(listaDoncentesEscuela.size());
+		
+		model.addAttribute("listaDocentesEscuela", listaDoncentesEscuela);	
 		model.addAttribute("sNombreDirector", sNombreDirector);
 		model.addAttribute("nId", "actualizacion");
 		model.addAttribute("tcEscuela", tcEscuela);
@@ -258,6 +296,39 @@ public class AdministradorController {
 		attributes.addFlashAttribute("msg", "Contraseña reestablecida correctamente");
 		attributes.addFlashAttribute("tcRegional", tcRegional);
 		return "redirect:/administrador/consultaEscuelaRegion";
+	}
+	
+	@GetMapping("reestablecerPasswordDocente")
+	public String reestablecerPassword(@RequestParam(required = false) Long id, RedirectAttributes attributes, Model model) {
+		
+		TwEscuelaDocentes twEscuelaDocentes = docenteEscuelaService.consultaDocenteEscuela(id);
+		
+		Usuario usuarioConsultado= usuarioService.obterUsuarioUsername(twEscuelaDocentes.getTcDocentes().getsCurp());
+		
+		if (usuarioConsultado == null) {
+			Usuario user = new Usuario();
+			user.setNombre(twEscuelaDocentes.getTcDocentes().getsNombre()+' '+twEscuelaDocentes.getTcDocentes().getsPrimerApellido()+' '+ twEscuelaDocentes.getTcDocentes().getsSegundoApellido());
+			user.setEmail(twEscuelaDocentes.getTcDocentes().getsCorreo());
+			user.setUsername(twEscuelaDocentes.getTcDocentes().getsCurp());
+			user.setPassword(passwordEncoder.encode(twEscuelaDocentes.getTcDocentes().getsClaveSerPub()));
+			user.setEstatus(1);	
+			
+			Perfil perfil = new Perfil();			
+			perfil.setnId(3L);			
+			user.agregar(perfil);	
+			
+			usuarioService.guardaUsuario(user);
+		}else {
+			usuarioConsultado.setPassword(passwordEncoder.encode(twEscuelaDocentes.getTcDocentes().getsClaveSerPub()));
+			
+			usuarioService.guardaUsuario(usuarioConsultado);
+			
+		}
+		
+		
+		model.addAttribute("id", twEscuelaDocentes.getnIdEscuela());
+		attributes.addFlashAttribute("msgDocente", "Contraseña reestablecida correctamente");
+		return "redirect:/administrador/editarEscuela?id="+twEscuelaDocentes.getnIdEscuela();
 	}
 	
 	

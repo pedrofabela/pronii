@@ -21,6 +21,8 @@ public interface DocenteEscuelaService {
 	
 	public List<TwEscuelaDocentes> consultaRelacionDocenteEscuela(Long idEscuela, Long idDocente);
 	
+	public TwEscuelaDocentes consultaRelacionDocenteEscuelaObject(Long idEscuela, Long idDocente);
+	
 	public List<TwEscuelaDocentes> consultaEscuelaRelacionadas(Long idDocente);
 	
 	public void eliminarDocenteEscuelaId(Long id);

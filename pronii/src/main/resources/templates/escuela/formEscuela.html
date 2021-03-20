@@ -24,250 +24,347 @@
 			<div class="content">
 				<div class="container-fluid">
 					<!-- div para formulario de escuelas -->
-					<div class="row">
-						<div class="col-md-12">
-							<div class="card">
-								<div class="col-md-12 text-center">
-									<h2>Datos de la Escuela</h2>
-								</div>
-								<div class="card-body">
-									<form th:action="@{/escuela/guardaEscuela}" method="post"
-										th:object="${tcEscuela}" id="FormEscuela">
-										
-										<input type="hidden" name="nId" th:field="*{nId}">
-										<div class="row">
-											<div class="col-md-3">
-												<div class="form-group">
-													<label class="bmd-label-floating">CCT</label> <input
-														type="text" class="form-control" th:field="*{sCct}"
-														minlength="10" maxlength="10"  readonly="readonly">
+					<form th:action="@{/escuela/guardaEscuela}" method="post"
+						th:object="${tcEscuela}" id="FormEscuela">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+
+									<div class="col-md-12">
+										<div class="card">
+											<div class="card-header card-header-icon card-header-rose">
+												<h2 class="card-title text-center">Datos de la escuela</h2>
+											</div>
+											<div class="card-body">
+												<input type="hidden" name="nId" th:field="*{nId}">
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Subdirección Regional de Educación Básica</label> <input
+																type="text" class="form-control"
+																th:field="*{tcRegional.sNombre}" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Zona escolar </label> <input
+																type="text" class="form-control"
+																th:field="*{tcZonaEscolar.sNombre}" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">CCT</label> <input
+																type="text" class="form-control" th:field="*{sCct}"
+																minlength="10" maxlength="10" readonly="readonly">
+														</div>
+													</div>
+
+
+
+												</div>
+												<div class="row">
+													<div class="col-md-8">
+														<div class="form-group">
+															<label class="bmd-label-floating">Nombre de la
+																escuela</label> <input type="text" class="form-control"
+																th:field="*{sNombre}" readonly="readonly">
+														</div>
+													</div>
+
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Turno </label> <input
+																type="text" class="form-control"
+																th:field="*{tcTurno.sNombre}" readonly="readonly">
+														</div>
+													</div>
+												</div>
+
+												<div class="row">
+
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Dirección</label> <input
+																type="text" class="form-control"
+																th:field="*{sDomicilio}" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Colonia</label> <input
+																type="text" class="form-control" th:field="*{sColonia}"
+																readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Localidad</label> <input
+																type="text" class="form-control"
+																th:field="*{sLocalidad}" readonly="readonly">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Municipio</label> <input
+																type="text" class="form-control"
+																th:field="*{tcMunicipio.sNombre}" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Teléfono</label> <input
+																type="tel" class="form-control" th:field="*{sTelefono}"
+																maxlength="10" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Correo
+																electrónico</label><input type="email" class="form-control"
+																th:field="*{sCorreo}" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">Modalidad</label> <input
+																type="text" class="form-control"
+																th:field="*{tcModalidad.sNombre}" readonly="readonly">
+														</div>
+													</div>
+
 												</div>
 											</div>
-											<div class="col-md-3">
-												<div class="form-group">
-													<label class="bmd-label-floating">Nombre de la
-														escuela</label> <input type="text" class="form-control"
-														th:field="*{sNombre}"  readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-3">
-												<div class="form-group">
-													<label class="bmd-label-floating">Turno
-														</label> <input type="text" class="form-control"
-														th:field="*{tcTurno.sNombre}"  readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-3">
-												<div class="form-group">
-													<label class="bmd-label-floating">Zona escolar
-														</label> <input type="text" class="form-control"
-														th:field="*{tcZonaEscolar.sNombre}"  readonly="readonly">
-												</div>
-											</div>
+
 										</div>
+									</div>
+
+									<div class="col-md-12">
 										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Dirección</label> <input
-														type="text" class="form-control" th:field="*{sDomicilio}"
-														 readonly="readonly">
+											<div class="col-md-6">
+												<div class="card">
+													<div class="card-header card-header-icon card-header-rose">
+														<h2 class="card-title text-center">Registro de Horas
+															Vacantes</h2>
+													</div>
+													<div class="card-body">
+														<div class="row">
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label class="bmd-label-floating">*Horas
+																		vacantes Indeterminadas</label> <input
+																		th:field="*{nHorasIndeterminadas}" type="number"
+																		class="form-control" required="required">
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label class="bmd-label-floating">*Horas
+																		vacantes determinadas</label> <input
+																		th:field="*{nHorasDeterminadas}" type="number"
+																		class="form-control" required="required">
+																</div>
+															</div>
+														</div>
+
+														<div class="category form-category">*Campos
+															Requeridos</div>
+
+														<button type="submit" class="btn btn-success pull-right">Actualizar</button>
+
+													</div>
 												</div>
 											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Colonia</label> <input
-														type="text" class="form-control" th:field="*{sColonia}"
-														 readonly="readonly">
+											<div class="col-md-6">
+												<div class="card">
+													<div class="card-header card-header-icon card-header-rose">
+														<h2 class="card-title text-center">Datos del Director</h2>
+													</div>
+													<div class="card-body">
+														<input type="hidden" th:field="*{nIdDirector}">
+														<div class="row">
+
+															<div class="col-md-4">
+																<label class="bmd-label-floating">Nombre del Director(a) Escolar</label> <input
+																	type="text" class="form-control"
+																	th:value="${sNombreDirector}" readonly="readonly">
+
+															</div>
+															<div class="col-md-4">
+																<label class="bmd-label-floating">Teléfono</label> <input
+																	type="text" class="form-control"
+																	th:value="${sTelefono}" readonly="readonly">
+
+															</div>
+															<div class="col-md-4">
+																<label class="bmd-label-floating">Correo
+																	electrónico</label> <input type="text" class="form-control"
+																	th:value="${sCorreo}" readonly="readonly">
+
+															</div>
+														</div>
+														<br>
+														<br>
+														<br>
+														<br>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Localidad</label> <input
-														type="text" class="form-control" th:field="*{sLocalidad}"
-														 readonly="readonly">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Municipio</label> <input
-														type="text" class="form-control" th:field="*{tcMunicipio.sNombre}"
-														 readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Teléfono</label> <input
-														type="tel" class="form-control" th:field="*{sTelefono}"
-														maxlength="10"  readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Correo
-														electrónico</label><input type="email" class="form-control"
-														th:field="*{sCorreo}"  readonly="readonly">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Modalidad</label> <input
-														type="text" class="form-control" th:field="*{tcModalidad.sNombre}"
-														 readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">Región</label> <input
-														type="text" class="form-control" th:field="*{tcRegional.sNombre}"
-														 readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<label class="bmd-label-floating">Director</label><input
-													type="text" class="form-control" id="consultaDirector"
-													name="sNombreDirector"  th:value="${sNombreDirector}" placeholder="ingresa el nombre del director"
-													required="required" readonly="readonly"> <input type="hidden"
-													id="IDDIRECTOR" class="form-control"
-													aria-label="Sizing example input"
-													aria-describedby="inputGroup-sizing-sm" name="IdDirector"
-													th:field="*{nIdDirector}">
 
 											</div>
 										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">¿LA ESCUELA FUE ATENDIDA EN EL CICLO 2019?</label> <input
-														type="text" class="form-control" th:field="*{sPreg1}"
-														 readonly="readonly">
-												</div>
+									</div>
+
+									<div class="col-md-12">
+										<div class="card">
+											<div class="card-header card-header-icon card-header-rose">
+												<h2 class="card-title text-center">CRITERIOS REGLAS DE
+													OPERACIÓN</h2>
 											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">¿LA ESCUELA FUE ATENDIDA EN EL CICLO 2020?</label> <input
-														type="text" class="form-control" th:field="*{sPreg2}"
-														  readonly="readonly">
+
+											<div class="card-body">
+
+
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">¿LA ESCUELA FUE
+																ATENDIDA EN EL CICLO 2019?</label> <input type="text"
+																class="form-control" th:field="*{sPreg1}"
+																readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">¿LA ESCUELA FUE
+																ATENDIDA EN EL CICLO 2020?</label> <input type="text"
+																class="form-control" th:field="*{sPreg2}"
+																readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">LA ESCUELA SE
+																UBICA EN ALGUNA DE LAS 401 CIUDADES DEL CATÁLOGO SUN
+																2018 </label><input type="text" class="form-control"
+																th:field="*{sPreg3}" readonly="readonly">
+														</div>
+													</div>
 												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">LA ESCUELA SE UBICA EN ALGUNA DE LAS 401 CIUDADES DEL CATÁLOGO SUN 2018
-                                                    </label><input type="text" class="form-control"
-														th:field="*{sPreg3}"  readonly="readonly">
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">¿LA ESCUELA SE
+																LOCALIZA EN UN MUNICIPIO CON UNA POBLACIÓN MAYOR A 2500
+																HABITANTES?</label> <input type="text" class="form-control"
+																th:field="*{sPreg4}" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">LA ESCUELA SE
+																UBICA EN UN MUNICIPIO ¿RURAL O URBANO?</label> <input
+																type="text" class="form-control" th:field="*{sPreg5}"
+																readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">¿CUÉNTA CON
+																VÍAS DE ACCESO PAVIMENTADAS? SI/NO </label><input type="text"
+																class="form-control" th:field="*{sPreg6}"
+																readonly="readonly">
+														</div>
+													</div>
 												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">LA ESCUELA SE
+																UBICA A 2 KMTS DE ALGUNA CABECERA MUNICIPAL SI/NO </label> <input
+																type="text" class="form-control" th:field="*{sPreg7}"
+																readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">GRADO DE
+																MARGINACIÓN DE LA LOCALIDAD EN LA QUE SE UBICA LA
+																ESCUELA DATOS 2015 </label> <input type="text"
+																class="form-control" th:field="*{sPreg8}"
+																readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">LA ESCUELA SE
+																UBICA EN UN "MUNICIPIO INDÍGENA" SEGÚN LA CDI </label><input
+																type="text" class="form-control" th:field="*{sPreg9}"
+																readonly="readonly">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">CUMPLE METAS DE
+																COBERTURA POR LA DGDC LA MIR </label> <input type="text"
+																class="form-control" th:field="*{sPreg10}"
+																readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">LA ESCUELA SE
+																UBICA EN UNA LOCALIDAD CATALOGADA COMO "PUEBLO MÁGICO" </label>
+															<input type="text" class="form-control"
+																th:field="*{sPreg11}" readonly="readonly">
+														</div>
+													</div>
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">CUENTA CON
+																CONDICIONES MÍNIMAS DE INSTALACIÓN ELÉCTRICA Y
+																EQUIPAMIENTO SI/NO</label> <input type="text"
+																class="form-control" th:field="*{sPreg12}"
+																readonly="readonly">
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-4">
+														<div class="form-group">
+															<label class="bmd-label-floating">CUENTA CON
+																CONECTIVIDAD A INTERNET SI/NO </label> <input type="text"
+																class="form-control" th:field="*{sPreg13}"
+																readonly="readonly">
+														</div>
+													</div>
+
+												</div>
+
 											</div>
 										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">¿LA ESCUELA SE LOCALIZA EN UN MUNICIPIO CON UNA POBLACIÓN MAYOR A 2500 HABITANTES?</label> <input
-														type="text" class="form-control" th:field="*{sPreg4}"
-														 readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">LA ESCUELA SE UBICA EN UN MUNICIPIO ¿RURAL O URBANO?</label> <input
-														type="text" class="form-control" th:field="*{sPreg5}"
-														  readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">¿CUÉNTA CON VÍAS DE ACCESO PAVIMENTADAS? SI/NO
-													</label><input type="text" class="form-control"
-														th:field="*{sPreg6}"  readonly="readonly">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">LA ESCUELA SE UBICA A 2 KMTS DE ALGUNA CABECERA MUNICIPAL SI/NO
-													</label> <input
-														type="text" class="form-control" th:field="*{sPreg7}"
-														 readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">GRADO DE MARGINACIÓN DE LA LOCALIDAD EN LA QUE SE UBICA LA ESCUELA DATOS 2015
-													</label> <input
-														type="text" class="form-control" th:field="*{sPreg8}"
-														  readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">LA ESCUELA SE UBICA EN UN "MUNICIPIO INDÍGENA" SEGÚN LA CDI													</label><input type="text" class="form-control"
-														th:field="*{sPreg9}"  readonly="readonly">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">CUMPLE METAS DE COBERTURA POR LA DGDC LA MIR
-													</label> <input
-														type="text" class="form-control" th:field="*{sPreg10}"
-														 readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">LA ESCUELA SE UBICA EN UNA LOCALIDAD CATALOGADA COMO "PUEBLO MÁGICO"
-													</label> <input
-														type="text" class="form-control" th:field="*{sPreg11}"
-														  readonly="readonly">
-												</div>
-											</div>
-											<div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">CUENTA CON CONDICIONES MÍNIMAS DE INSTALACIÓN ELÉCTRICA Y EQUIPAMIENTO SI/NO</label>
-													<input type="text" class="form-control"
-														th:field="*{sPreg12}"  readonly="readonly">
-												</div>
-											</div>
-										</div>
-									   <div class="row">
-									   <div class="col-md-4">
-												<div class="form-group">
-													<label class="bmd-label-floating">CUENTA CON CONECTIVIDAD A INTERNET SI/NO </label>
-													<input type="text" class="form-control"
-														th:field="*{sPreg13}"  readonly="readonly">
-												</div>
-											</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="bmd-label-floating">*Horas vacantes Indeterminadas</label> <input th:field="*{nHorasIndeterminadas}" type="number" class="form-control" required="required">
-											</div>
-										</div>
-										<div class="col-md-4">
-											<div class="form-group">
-												<label class="bmd-label-floating">*Horas vacantes determinadas</label> <input th:field="*{nHorasDeterminadas}" type="number" class="form-control" required="required">
-											</div>
-										</div>
-									</div> 
-										<br> <br>
-										<div class="category form-category">*Campos Requeridos</div>
-										
-										<button type="submit"   class="btn btn-success pull-right">Actualizar</button>
-										
-										
-									</form>
+									</div>
+
+
+
+
+
+
+
+
+
 								</div>
 							</div>
 						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 			<footer>
-        <div th:insert="fragments/footer :: footer"></div>
-      </footer>
+				<div th:insert="fragments/footer :: footer"></div>
+			</footer>
 		</div>
 	</div>
 

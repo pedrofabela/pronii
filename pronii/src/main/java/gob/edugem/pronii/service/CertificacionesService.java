@@ -17,5 +17,11 @@ public interface CertificacionesService {
 	public TwCenni consultaCertificacionCenni(Long idDocente);
 	
 	public TwMetodologia consultaCertificacionMetodologia(Long idDocente);
+	
+public TwNivelIdioma consultaCertificacionNivelId(Long id);
+	
+	public TwCenni consultaCertificacionCenniId(Long id);
+	
+	public TwMetodologia consultaCertificacionMetodologiaId(Long id);
 
 }

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import gob.edugem.pronii.model.TwAcceso;
 import gob.edugem.pronii.model.Usuario;
+import gob.edugem.pronii.service.AccesoService;
 import gob.edugem.pronii.service.UsuarioService;
 
 @Controller
@@ -29,24 +30,35 @@ public class LoginController {
 	@Autowired 
 	PasswordEncoder passwordEncoder;
 	
+	@Autowired
+	private AccesoService accesoService;
+	
 	@GetMapping("/")
 	public String home(Model model, Authentication auth, HttpSession session) {
 		String username= auth.getName();
-		System.out.println("Nombre del usuario: "+username);
-		for (GrantedAuthority rol : auth.getAuthorities()) {
-			System.out.println("Rol: "+ rol.getAuthority());
-		}
+		Usuario usuarioRecuperado = null;
+		usuarioRecuperado=usuarioService.obterUsuarioUsername(username);
+		
+		TwAcceso twAcceso = new TwAcceso();
+		twAcceso.setUsuarioAcceso(usuarioRecuperado.getUsername());
+		twAcceso.setsNombre(usuarioRecuperado.getNombre());
+		accesoService.guardaAcceso(twAcceso);
+		
 		
 		if (session.getAttribute("usuario") == null ) {
-			Usuario usuario=usuarioService.obterUsuarioUsername(username);
-			usuario.setPassword(null);
-			System.out.println("usuarioRecuperado: "+usuario);
-			session.setAttribute("nIdUsuario",usuario.getnId());
-			session.setAttribute("usuario", usuario);
+			
+			usuarioRecuperado.setPassword(null);
+			System.out.println("usuarioRecuperado: "+usuarioRecuperado);
+			session.setAttribute("nIdUsuario",usuarioRecuperado.getnId());
+			session.setAttribute("username",usuarioRecuperado.getUsername());
+			session.setAttribute("nombreUsuario",usuarioRecuperado.getNombre());
+			session.setAttribute("usuario", usuarioRecuperado);		
 		}
 		
 		
-		model.addAttribute("active","nav-item active");		  
+		
+		
+					  
 		return "index";
 	}
 	
@@ -71,6 +83,8 @@ public class LoginController {
 				
 		
 	}
+	
+	
 	
 //	@GetMapping("/bcrypt")
 //	@ResponseBody //regresa el texto al navegador de internet

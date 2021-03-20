@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no'
+	name='viewport' />
+
+<title>Index</title>
+<th:block th:include="fragments/cabecera :: cabecera"></th:block>
+
+</head>
+<body class="">
+	<div class="wrapper ">
+
+		<div th:insert="fragments/menu :: menu-principal"></div>
+
+		<div class="main-panel">
+			<!-- Navbar horizontal -->
+			<div th:insert="fragments/menuHorizontal :: menu-horizontal"></div>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<!-- div para formulario de escuelas -->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="card">
+								<div class="col-md-12 text-center">
+									<h2>Actualización de docente</h2>
+								</div>
+								<div class="card-body">
+									
+									<div class="col-md-12 text-center">
+									<h2>Complete los campos para actualizar al docente</h2>
+								    </div>
+									<form th:action="@{/escuela/actualizarDocente}" method="post"
+										th:object="${tcDocentes}" id="FormDocente">
+
+										<input type="hidden" name="nId" th:field="*{nId}">
+										<input type="hidden"  th:field="*{nPerfil}">
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Curp</label> <input
+														type="text" class="form-control" th:name="curp"
+														th:field="*{sCurp}"  readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Nombre</label> <input
+														type="text" th:field="*{sNombre}" class="form-control" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Apellido Paterno</label> <input
+														type="text" th:field="*{sPrimerApellido}" class="form-control" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">Apellido Materno</label> <input
+														type="text" th:field="*{sSegundoApellido}" class="form-control" readonly="readonly">
+												</div>
+											</div>
+											
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Sexo</label>
+													<input type="hidden" th:field="*{nIdSexo}">
+													<input type="text" class="form-control" readonly="readonly" th:field="*{tcGenero.sNombre}">
+													
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Fecha de nacimiento</label>
+													 <input type="text" th:field="*{sFechaNacimiento}"    class="form-control " readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*clave de servidor
+														público</label> <input type="text" class="form-control" th:field="*{sClaveSerPub}" minlength="9" maxlength="9" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Teléfono</label> <input
+														type="tel" class="form-control" th:field="*{sTelefono}" minlength="10" maxlength="10" readonly="readonly">
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Nivel de estudios</label>
+													<input type="hidden" th:field="*{nIdPreProfe}">
+													<input type="text" class="form-control" readonly="readonly" th:field="*{tcPreProfe.sNombre}">
+													
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating" id="gradoE"></label> 
+													<input type="text"  th:field="*{sNombrePrePro}"   class="form-control" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Correo
+														electrónico</label> <input type="email" th:field="*{sCorreo}" class="form-control" readonly="readonly">
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+													<label class="bmd-label-floating">*Fecha de Ingreso al subsistema</label>
+													 <input type="text" id="fechaIngresoSubsistema" th:field="*{sFechaIngresoSubsistema}" placeholder="*Fecha de Ingreso al subsistema" class="form-control" readonly="readonly">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-3">
+											<div class="form-group">
+												<label class="bmd-label-floating">*cuenta con alguna licencia de trabajo</label>
+												<select class="selectpicker"
+													data-style="select-with-transition" 
+													 id="opcionLicencia" th:field="*{nIdTieneLicencia}" onchange="seleccionado()"  data-size="7" >															
+													<option  value="1" >SI</option>
+													<option  value="2" >NO</option>
+												</select>
+											</div>
+											</div>
+											<div class="row col-md-8" id="licencia"   style="display:none;">
+												<div class="col-md-3">
+												<div class="form-group">
+												<label class="bmd-label-floating">*Tipo de licencia de trabajo</label>
+												<select class="selectpicker" 
+													data-style="select-with-transition"								
+													 id="TipoLicencia"   data-size="7"  th:field="*{nIdTipoLicencia}" required>						
+													<option th:each="licencia: ${listaTipoLicencia}" th:value="${licencia.nId}" th:text="${licencia.sNombre}"></option>
+												</select>
+												</div>
+											</div>
+											<div class="col-md-3">
+												<div class="form-group">
+												<label class="bmd-label-floating">*Fecha de Inicio de la Licencia</label>
+													 <input type="text" id="fechaInicioLicencia" th:field="*{sFechaInicioLicencia}" class="form-control"  required="required">
+												</div>
+											</div>									
+											<div class="col-md-3">
+												<div class="form-group">
+												<label class="bmd-label-floating">*Fecha de Termino de la Licencia</label>
+													 <input type="text" id="fechaFinLicencia" th:field="*{sFechaFinLicencia}"  class="form-control"  required="required">
+												</div>
+											</div>
+											
+											</div>
+										</div>
+
+										<br> <br>
+										<div class="category form-category">*Campos Requeridos</div>
+										
+										<button type="submit" 
+											class="btn btn-success pull-right">Actualizar Datos</button>
+										<br> <br> <br>
+										<div th:if="${msg != null}" class='alert alert-danger'
+											th:text="${msg}" role='alert'></div>
+										<div class="clearfix"></div>
+									</form>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<footer>
+        <div th:insert="fragments/footer :: footer"></div>
+      </footer>
+		</div>
+	</div>
+
+	<th:block th:include="fragments/scripts :: script"></th:block>
+	
+	<!-- Script para agregar nombre a la etiqueta de nombre de preparacion profesional -->
+	<script >
+	$(document).ready(function(){
+		var combo = document.getElementById("grado");
+		var selected = combo.options[combo.selectedIndex].value;
+		//alert(selected);
+		
+		if(selected == 1){
+			document.querySelector('#gradoE').innerText='*nombre de licenciatura';
+		}else if(selected == 2 ){
+			document.querySelector('#gradoE').innerText='*nombre de la maestria';
+		}else if(selected == 3 ){
+			document.querySelector('#gradoE').innerText='*nombre del doctorado';
+		}else if(selected == 4 ){
+			document.querySelector('#gradoE').innerText='*nombre de otros estudios';
+		}else{
+			document.querySelector('#gradoE').innerText='*seleccione una preparación profesional';
+		}
+		
+		$("#grado").change(function(){
+			
+			var  select = $("#grado").val();
+			
+			
+			if(select == 1){
+				document.querySelector('#gradoE').innerText='nombre de licenciatura';
+			}else if(select == 2 ){
+				document.querySelector('#gradoE').innerText='nombre de la maestria';
+			}else if(select == 3 ){
+				document.querySelector('#gradoE').innerText='nombre del doctorado';
+			}else{
+				document.querySelector('#gradoE').innerText='nombre de otros estudios';
+			}
+				            
+	        });
+		
+	});
+	</script>
+	
+	<!-- Sript para mostrar u ocultar licencias -->
+	<script>
+	var comboLicencia = document.getElementById("opcionLicencia");
+	var selected = comboLicencia.options[comboLicencia.selectedIndex].value;
+	//alert("valor de opcion licencia: "+selected)
+	if(selected==1){
+        $('#licencia').show();
+        $("#TipoLicencia").prop('disabled', false);
+        
+        
+    }else{	        	
+        $('#licencia').hide();
+        
+        $("#fechaInicioLicencia").val('01-01-1900');
+        $("#fechaFinLicencia").val('01-01-1900');
+        
+    }
+	
+	
+	function seleccionado(){
+	    var opt = $('#opcionLicencia').val();
+	    
+	    if(opt==1){
+	        $('#licencia').show();
+	        $("#TipoLicencia").prop('disabled', false);
+	        $("#fechaInicioLicencia").val('');
+            $("#fechaFinLicencia").val('');
+            //alert("if"+opt);
+	        
+	    }else{	        	
+	            $('#licencia').hide();
+	            $("#TipoLicencia").prop('disabled', 'disabled');
+	            $("#fechaInicioLicencia").val('01-01-1900');
+	            $("#fechaFinLicencia").val('01-01-1900');
+	            //alert("else"); 
+	        }
+	    }
+	</script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>  
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+	$(function () {
+        $("#fechaIngresoSubsistema").datepicker({dateFormat: 'dd-mm-yy'});
+      }
+    );
+	$(function () {
+        $("#fechaInicioLicencia").datepicker({dateFormat: 'dd-mm-yy'});
+      }
+    );
+	$(function () {
+        $("#fechaFinLicencia").datepicker({dateFormat: 'dd-mm-yy'});
+      }
+    );
+	</script>
+	
+</body>
+
+
+</html>

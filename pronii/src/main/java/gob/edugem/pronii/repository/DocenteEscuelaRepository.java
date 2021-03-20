@@ -15,6 +15,9 @@ public interface DocenteEscuelaRepository extends JpaRepository<TwEscuelaDocente
 	@Query("select t from TwEscuelaDocentes t where t.nIdEscuela=:IdEscuela and t.nIdDocente=:IdDocente")
 	public List<TwEscuelaDocentes> findBynIdEscuelaAndnIdDocente(Long IdEscuela, Long IdDocente);
 	
+	@Query("select t from TwEscuelaDocentes t where t.nIdEscuela=:IdEscuela and t.nIdDocente=:IdDocente")
+	public TwEscuelaDocentes findBynIdEscuelaAndnIdDocenteObject(Long IdEscuela, Long IdDocente);
+	
 	
 	public List<TwEscuelaDocentes> findBynIdDocente(Long IdDocente);
 	
