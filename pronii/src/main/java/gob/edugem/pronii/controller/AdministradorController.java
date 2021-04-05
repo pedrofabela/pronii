@@ -1,5 +1,6 @@
 package gob.edugem.pronii.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -289,9 +290,28 @@ public class AdministradorController {
 		
 		Usuario usuarioConsultado= usuarioService.obterUsuarioUsername(tcEscuela.getsCct());
 		
-		usuarioConsultado.setPassword(passwordEncoder.encode(tcEscuela.getsCct()));
+		if (usuarioConsultado== null ) {
+			
+			Usuario user = new Usuario();
+			user.setNombre(tcEscuela.getsNombre());
+			user.setEmail("");
+			user.setUsername(tcEscuela.getsCct());
+			user.setPassword(passwordEncoder.encode(tcEscuela.getsCct()));
+			user.setEstatus(1);
+			user.setFechaRegistro(new Date());
+
+			Perfil perfil = new Perfil();
+			perfil.setnId(2L);
+			user.agregar(perfil);
+
+			usuarioService.guardaUsuario(user);
+			
+		}else {
+			usuarioConsultado.setPassword(passwordEncoder.encode(tcEscuela.getsCct()));		
+			usuarioService.guardaUsuario(usuarioConsultado);
+		}
 		
-		usuarioService.guardaUsuario(usuarioConsultado);
+		
 		tcRegional.setnId(nIdRegion);
 		attributes.addFlashAttribute("msg", "Contraseña reestablecida correctamente");
 		attributes.addFlashAttribute("tcRegional", tcRegional);

@@ -85,7 +85,7 @@ public class EscuelaController {
 	
 
 	public String nId;
-	public Long nIdEscuela;
+	
 	
 
 	@GetMapping("consultaDocentes")
@@ -94,7 +94,7 @@ public class EscuelaController {
 		String username = (String) session.getAttribute("username");
 		System.out.println("Nombre del usuario: " + username);
 		TcEscuela tcEscuela = escuelaService.obtenerEscuelaCct(username);
-		nIdEscuela = tcEscuela.getnId();
+
 		List<TwEscuelaDocentes> listaDoncentesEscuela = docenteEscuelaService.obtenerDocentesEscuela(tcEscuela.getnId());
 		System.out.println(listaDoncentesEscuela.size());
 		
@@ -112,8 +112,12 @@ public class EscuelaController {
 	}
 
 	@GetMapping("consultaCurp")
-	public String consultaCurp(@RequestParam(required = false) String curp, TcDocentes tcDocentes, Model model) {
-		System.err.println("nIdEscuela controller: "+nIdEscuela);
+	public String consultaCurp(@RequestParam(required = false) String curp, TcDocentes tcDocentes, Model model, HttpSession session) {
+		
+		String username = (String) session.getAttribute("username");
+		System.out.println("Nombre del usuario: " + username);
+		TcEscuela tcEscuela = escuelaService.obtenerEscuelaCct(username);
+		
 		tcDocentes = docenteEscuelaService.consultaDocenteCurp(curp);
 		
 		
@@ -142,7 +146,7 @@ public class EscuelaController {
 		
 		if (tcDocentes != null) {
 			
-			List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(nIdEscuela, tcDocentes.getnId());
+			List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(tcEscuela.getnId(), tcDocentes.getnId());
 			
 			if (listaRelacion.size() > 0) {
 				for (TwEscuelaDocentes twEscuelaDocentes : listaRelacion) {
@@ -193,7 +197,7 @@ public class EscuelaController {
 		twEscuelaDocentes.setnEstatus(0);
 		twEscuelaDocentes.setnTieneLicencia(tcDocentes.getnIdTieneLicencia());
 		
-		if (tcDocentes.getnIdTieneLicencia() == 2) {
+		if (tcDocentes.getnIdTieneLicencia() == 2L) {
 			twEscuelaDocentes.setnIdTipoLicencia(0L);
 		}else {
 			twEscuelaDocentes.setnIdTipoLicencia(tcDocentes.getnIdTipoLicencia());
@@ -264,7 +268,7 @@ public class EscuelaController {
 				attributes.addFlashAttribute("msg", "Docente agregado a la escuela correctamente");
 			}
 		}
-		attributes.addFlashAttribute("nIdEscuela", nIdEscuela);
+		
 		return "redirect:/escuela/consultaDocentes";
 
 	}
@@ -274,7 +278,7 @@ public class EscuelaController {
 		
 		docenteEscuelaService.eliminarDocenteEscuelaId(id);		
 		
-		attributes.addFlashAttribute("nIdEscuela", nIdEscuela);
+		
 		attributes.addFlashAttribute("msg", "Docente eliminado correctamente!");
 		return "redirect:/escuela/consultaDocentes";
 	}
@@ -298,7 +302,6 @@ public class EscuelaController {
 		twEscuelaDocentes.setdFechaInicioLicencia(twEscuelaDocentesConsultado.getdFechaInicioLicencia());
 		twEscuelaDocentes.setdFechaFinLicencia(twEscuelaDocentesConsultado.getdFechaFinLicencia());
 		docenteEscuelaService.guardaDocenteEscuela(twEscuelaDocentes);
-		attributes.addFlashAttribute("nIdEscuela", nIdEscuela);
 		attributes.addFlashAttribute("msg", "Matrícula del docente registrada correctamente!");
 		return "redirect:/escuela/consultaDocentes";
 		
@@ -334,7 +337,7 @@ public class EscuelaController {
 		tcEscuelaConsultada.setnAlumnosTerceroM(tcEscuela.getnAlumnosTerceroM());
 		
 		escuelaService.guardaEscuela(tcEscuelaConsultada);
-		attributes.addFlashAttribute("nIdEscuela", nIdEscuela);
+		
 		attributes.addFlashAttribute("msg", "Matrícula registrada correctamente!");
 		return "redirect:/";
 		
@@ -444,14 +447,17 @@ public class EscuelaController {
 	}
 	
 	@GetMapping("/consultaDocente")
-	public String consultaDocente(@RequestParam(required = true) Long id, TcDocentes tcDocentes, Model model) {
+	public String consultaDocente(@RequestParam(required = true) Long id, TcDocentes tcDocentes, Model model, HttpSession session) {
 		
-		System.err.println("nIdEscuela controller: "+nIdEscuela);
+		String username = (String) session.getAttribute("username");
+		System.out.println("Nombre del usuario: " + username);
+		TcEscuela tcEscuela = escuelaService.obtenerEscuelaCct(username);
+		
 		tcDocentes = docenteEscuelaService.consultaDocenteId(id);
 		
 		System.out.println("valor de id recibido: "+id);
 		
-		List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(nIdEscuela, tcDocentes.getnId());
+		List<TwEscuelaDocentes> listaRelacion = docenteEscuelaService.consultaRelacionDocenteEscuela(tcEscuela.getnId(), tcDocentes.getnId());
 		
 		if (listaRelacion.size() > 0) {
 			for (TwEscuelaDocentes twEscuelaDocentes : listaRelacion) {
@@ -470,7 +476,11 @@ public class EscuelaController {
 	}
 	
 	@PostMapping("/actualizarDocente")
-	public String actualizarDocente(TcDocentes tcDocentes, Model model, RedirectAttributes attributes) {
+	public String actualizarDocente(TcDocentes tcDocentes, Model model, RedirectAttributes attributes, HttpSession session) {
+		
+		String username = (String) session.getAttribute("username");
+		System.out.println("Nombre del usuario: " + username);
+		TcEscuela tcEscuela = escuelaService.obtenerEscuelaCct(username);
 		
 		TcDocentes docenteConsultado = docenteEscuelaService.consultaDocenteId(tcDocentes.getnId());
 		
@@ -482,7 +492,7 @@ public class EscuelaController {
 		docenteConsultado.setsCorreo(tcDocentes.getsCorreo());
 		docenteConsultado.setsFechaIngresoSubsistema(tcDocentes.getsFechaIngresoSubsistema());
 		
-		TwEscuelaDocentes relDocEsc = docenteEscuelaService.consultaRelacionDocenteEscuelaObject(nIdEscuela, tcDocentes.getnId());
+		TwEscuelaDocentes relDocEsc = docenteEscuelaService.consultaRelacionDocenteEscuelaObject(tcEscuela.getnId(), tcDocentes.getnId());
 		
 		relDocEsc.setnTieneLicencia(tcDocentes.getnIdTieneLicencia());
 		relDocEsc.setnIdTipoLicencia(tcDocentes.getnIdTipoLicencia());
@@ -511,7 +521,7 @@ public class EscuelaController {
 		model.addAttribute("ListaMunicipio", municipioService.obtenerMunicipioEstatus());
 		model.addAttribute("ListaModalidad", modalidadService.obtenerModalidadEstatus());
 		model.addAttribute("listaTipoLicencia", tipoLicenciaService.obtenerTipoLicencias());
-		model.addAttribute("nIdEscuela", nIdEscuela);
+		
 	}
 	
 	@InitBinder
